@@ -81,13 +81,13 @@ function Header() {
   ]
 
   return (
-    <header className="flex w-full min-h-18 bg-white shadow-md sticky">
+    <header className="flex w-full min-h-18 bg-white shadow-sm sticky">
       <div className="w-6xl mx-auto flex justify-between items-center">
         <div className="font-bold text-2xl">TeloCuento</div>
 
         <NavigationMenu>
           <NavigationMenuList>
-            <Link href="/" className="text-sm px-5">Telos</Link>
+            <Link href="/telos" className="text-sm px-5">Telos</Link>
             <NavigationMenuItem>
               <NavigationMenuTrigger>Distritos</NavigationMenuTrigger>
               <NavigationMenuContent>
@@ -102,6 +102,7 @@ function Header() {
                 </ul>
               </NavigationMenuContent>
             </NavigationMenuItem>
+
             <NavigationMenuItem>
               <NavigationMenuTrigger>Comodidades</NavigationMenuTrigger>
               <NavigationMenuContent>
