@@ -8,13 +8,17 @@ import { uploadImage } from "@/supabase/storage/client";
 import Image from "next/image";
 import { ChangeEvent, useRef, useState, useTransition } from "react";
 
-function Upload() {
+function UploadDistrito() {
   const [districtName, setDistrictName] = useState<string>("");
   const [imageUrls, setImageUrls] = useState<string[]>([]);
   const supabase = createSupabaseClient();
 
   const imageInputRef = useRef<HTMLInputElement>(null);
-
+  
+  const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setDistrictName(e.target.value);
+  };
+  
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const files = Array.from(e.target.files);
@@ -24,9 +28,6 @@ function Upload() {
     }
   };
 
-  const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setDistrictName(e.target.value);
-  };
 
   const [isPending, startTransition] = useTransition();
 
@@ -111,4 +112,4 @@ function Upload() {
   );
 }
 
-export default Upload;
+export default UploadDistrito;
