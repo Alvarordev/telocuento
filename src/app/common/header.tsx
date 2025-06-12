@@ -8,55 +8,10 @@ import {
 } from "@/components/ui/navigation-menu";
 import { Bed } from "lucide-react";
 import Link from "next/link";
+import getDistritos from "../(landing)/services/getDistritos";
 
-function Header() {
-  const distritos = [
-    {
-      id: 1,
-      name: "Ate",
-      image: "/ate.jpg",
-    },
-    {
-      id: 2,
-      name: "Barranco",
-      image: "/barranco.jpg",
-    },
-    {
-      id: 3,
-      name: "Breña",
-      image: "/brena.jpg",
-    },
-    {
-      id: 4,
-      name: "Callao",
-      image: "/callao.jpg",
-    },
-    {
-      id: 5,
-      name: "Chorrillos",
-      image: "/chorrillos.jpg",
-    },
-    {
-      id: 6,
-      name: "Comas",
-      image: "/comas.jpg",
-    },
-    {
-      id: 7,
-      name: "Jesús María",
-      image: "/jesus-maria.jpg",
-    },
-    {
-      id: 8,
-      name: "La Molina",
-      image: "/la-molina.jpg",
-    },
-    {
-      id: 9,
-      name: "La Victoria",
-      image: "/la-victoria.jpg",
-    },
-  ];
+async function Header() {
+  const distritos = await getDistritos()
 
   const comodidades = [
     {
@@ -101,9 +56,9 @@ function Header() {
               <NavigationMenuContent>
                 <ul className="grid w-[200px] gap-4">
                   <li>
-                    {distritos.map((distrito) => (
+                    {distritos.districts.map((distrito) => (
                       <NavigationMenuLink asChild key={distrito.id}>
-                        <Link href="#">{distrito.name}</Link>
+                        <Link href={`/telos/${distrito.slug}`}>{distrito.nombre}</Link>
                       </NavigationMenuLink>
                     ))}
                   </li>
@@ -125,10 +80,7 @@ function Header() {
                 </ul>
               </NavigationMenuContent>
             </NavigationMenuItem>
-
-            <Link href="/" className="text-sm px-5">
-              Blog
-            </Link>
+            
           </NavigationMenuList>
         </NavigationMenu>
       </div>

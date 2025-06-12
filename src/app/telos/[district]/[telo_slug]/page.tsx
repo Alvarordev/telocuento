@@ -23,6 +23,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import Link from "next/link";
+import MapEmbed from "@/app/common/mapEmbed";
 
 async function TeloPage({
   params,
@@ -136,9 +137,7 @@ async function TeloPage({
             <section className="mb-8">
               <h2 className="text-2xl font-bold mb-4">Ubicación</h2>
               <p className="text-gray-600 mb-4">{telo?.ubicacion}</p>
-              <div className="w-full h-64 bg-gray-200 rounded-lg flex items-center justify-center">
-                <p className="text-gray-500">Mapa de Google Maps</p>
-              </div>
+              <MapEmbed address={telo?.ubicacion} />
             </section>
           </div>
 

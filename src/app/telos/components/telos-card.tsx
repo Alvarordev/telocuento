@@ -12,7 +12,7 @@ interface TelosCardProps {
 
 function TelosCard({ name, district, rating, slug, foto }: TelosCardProps) {
   return (
-    <Link href={`/${district.slug}/${slug}`} className="flex flex-col">
+    <Link href={`/telos/${district.slug}/${slug}`} className="flex flex-col">
       <img src={foto} alt={name} className="h-[321px] w-full rounded-lg" />
       <div className="flex flex-col gap-0.5 mt-2">
         <h3 className="text-lg font-bold">{name}</h3>

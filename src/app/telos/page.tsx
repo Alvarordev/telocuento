@@ -12,7 +12,7 @@ import getTelos from "./services/getTelos";
 import getDistritos from "./services/getDistritos";
 import getServicios from "./services/getServicios";
 
-async function DistrictPage() {
+async function TelosPage() {
   const telos = await getTelos();
   const distritos = await getDistritos();
   const servicios = await getServicios();
@@ -86,4 +86,4 @@ async function DistrictPage() {
     </Container>
   );
 }
-export default DistrictPage;
+export default TelosPage;

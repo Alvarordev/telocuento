@@ -1,9 +1,10 @@
 import { createSupabaseClient } from "@/supabase/client";
 
-interface Servicios {
+export interface Servicios {
     id: string;
     nombre: string;
     foto: string;
+    slug: string;
 }
 
 async function getServicios(): Promise<{ servicios: Servicios[] }> {

@@ -1,21 +1,24 @@
+import { Distrito } from "@/services/get-distritos";
+import { Telo } from "@/services/get-telos";
+import Image from "next/image";
+import Link from "next/link";
+
 interface CardProps {
-    name: string;
-    rating: number;
-    district: string;
-    image?: string;
+    telo: Telo;
+    district: Distrito;
 }
 
-function Card({name, rating, district}: CardProps) {
+function Card({telo, district}: CardProps) {
     return(
-        <div className="">
-            <div className="bg-gray-400 min-w-[270px] w-full min-h-80 rounded-lg" >a</div>
+        <Link href={`/telos/${district.slug}/${telo.slug}`}>
+            <Image src={telo.fotos[0]} alt={telo.slug} width={270} height={320}  className="rounded-lg max-h-80 object-cover" />
 
             <div className="flex flex-col gap-1 mt-4">
-                <h3 className="text-lg font-bold">{name}</h3>
-                <p className="text-base font-light">{district}</p>
-                <p>⭐ {rating}</p>
+                <h3 className="text-lg font-bold">{telo.nombre}</h3>
+                <p className="text-base font-light">{district.nombre}</p>
+                <p>⭐ {telo.stars}</p>
             </div>
-        </div>
+        </Link>
     )
 }
 

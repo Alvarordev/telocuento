@@ -1,21 +1,28 @@
 /* eslint-disable @next/next/no-img-element */
 
+import { Distrito } from "@/services/get-distritos";
+import { Servicios } from "@/services/get-servicios";
+import Link from "next/link";
+
 interface ZoneCardProps {
-    district: string;
-    image: string;
-    hotels: number;
+  data: Distrito | Servicios;
+  hotels: number;
 }
 
-function ZoneCard({district, image, hotels}: ZoneCardProps) {
-    return (
-        <div className=" rounded-lg">
-            <div className="flex flex-col gap-1 mt-4">
-                <img src={image} alt="cualquiera" className="max-w-[270px] min-h-[240px] object-cover rounded-lg"/>
-                <h3 className="text-lg font-bold">{district}</h3>
-                <p className="text-base font-light">{hotels} hoteles disponibles</p>
-            </div>
-        </div>
-    )
+function ZoneCard({ data, hotels }: ZoneCardProps) {
+  return (
+    <Link href={`/telos/${data.slug}`} className=" rounded-lg">
+      <div className="flex flex-col gap-1 mt-4">
+        <img
+          src={data.foto}
+          alt="cualquiera"
+          className="max-w-[270px] min-h-[240px] object-cover rounded-lg"
+        />
+        <h3 className="text-lg font-bold">{data.nombre}</h3>
+        <p className="text-base font-light">{hotels} hoteles disponibles</p>
+      </div>
+    </Link>
+  );
 }
 
 export default ZoneCard;
