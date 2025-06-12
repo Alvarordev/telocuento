@@ -8,56 +8,50 @@ import Container from "../common/container";
 import { Input } from "@/components/ui/input";
 import TelosCard from "./components/telos-card";
 import { Checkbox } from "@/components/ui/checkbox";
+import getTelos from "./services/getTelos";
+import getDistritos from "./services/getDistritos";
+import getServicios from "./services/getServicios";
 
-function DistrictPage() {
-  const telos = [
-    { id: 1, name: "Hotel Asturias", district: "Lince", rating: 4.3 },
-    { id: 2, name: "Hotel Quadrum", district: "Lince", rating: 4.5 },
-    { id: 3, name: "Telos Barranco", district: "Barranco", rating: 4.0 },
-    { id: 4, name: "Telos San Miguel", district: "San Miguel", rating: 4.2 },
-    { id: 5, name: "Telos Surco", district: "Surco", rating: 4.1 },
-    { id: 6, name: "Telos San Isidro", district: "San Isidro", rating: 4.4 },
-    { id: 7, name: "Telos Jesús María", district: "Jesús María", rating: 4.3 },
-    { id: 8, name: "Telos La Victoria", district: "La Victoria", rating: 4.0 },
-    { id: 9, name: "Telos Callao", district: "Callao", rating: 4.2 },
-    { id: 10, name: "Telos Comas", district: "Comas", rating: 4.1 },
-  ];
+async function DistrictPage() {
+  const telos = await getTelos();
+  const distritos = await getDistritos();
+  const servicios = await getServicios();
+
+  console.log(telos);
 
   return (
     <Container>
       <div className="w-6xl mx-auto grid grid-cols-4 gap-4 my-10">
-        <aside className="col-span-1 border border-gray-200">
-            <div className="p-4">
-                <p className="font-semibold pb-3">Distrito</p>
-                <ul className="flex flex-col gap-1">
-                    <li className="flex gap-2 items-center">
-                        <Checkbox/>
-                        <p>Ate</p>
-                    </li>
-                    <li className="flex gap-2 items-center">
-                        <Checkbox/>
-                        <p>Lince</p>
-                    </li>
-                    <li className="flex gap-2 items-center">
-                        <Checkbox/>
-                        <p>San Miguel</p>
-                    </li>
-                    <li className="flex gap-2 items-center">
-                        <Checkbox/>
-                        <p>Miraflores</p>
-                    </li>
-                    <li className="flex gap-2 items-center">
-                        <Checkbox/>
-                        <p>Barranco</p>
-                    </li>
-                </ul>
-            </div>
+        <aside className="flex flex-col col-span-1 border border-gray-200 shadow-sm self-start">
+          <div className="p-4">
+            <p className="font-semibold pb-3">Ubicación</p>
+            <ul className="flex flex-col gap-1">
+              {distritos.districts.map((district) => (
+                <li className="flex gap-2 items-center" key={district.id}>
+                  <Checkbox />
+                  <p>{district.nombre}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="p-4">
+            <p className="font-semibold pb-3">Servicios</p>
+            <ul className="flex flex-col gap-1">
+              {servicios.servicios.map((servicio) => (
+                <li className="flex gap-2 items-center" key={servicio.id}>
+                  <Checkbox />
+                  <p>{servicio.nombre}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
         </aside>
 
         <div className="col-span-3 flex flex-col gap-4">
           <h1 className="text-3xl font-bold">Telos en Lima</h1>
           <div className="flex items-center justify-between">
-            <p className="text-gray-400 text-base">30 hoteles</p>
+            <p className="text-gray-400 text-base">{telos.length} hotel(es)</p>
 
             <Select>
               <SelectTrigger>
@@ -75,13 +69,18 @@ function DistrictPage() {
 
           <div className="grid grid-cols-2 grid-rows-3 gap-4 ">
             {telos.map((telo) => (
-                <TelosCard
-                  key={telo.id}
-                  name={telo.name}
-                  district={telo.district}
-                  rating={telo.rating}/>
+              <TelosCard
+                key={telo.id}
+                name={telo.nombre}
+                district={
+                  distritos.districts.find((d) => d.id === telo.distrito_id)!
+                }
+                rating={telo.stars}
+                slug={telo.slug}
+                foto={telo.fotos[0]}
+              />
             ))}
-        </div>
+          </div>
         </div>
       </div>
     </Container>

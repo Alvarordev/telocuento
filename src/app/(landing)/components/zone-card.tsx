@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+
 interface ZoneCardProps {
     district: string;
     image: string;

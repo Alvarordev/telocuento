@@ -6,6 +6,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
+import { Bed } from "lucide-react";
 import Link from "next/link";
 
 function Header() {
@@ -78,16 +79,23 @@ function Header() {
       name: "Piscina",
       image: "/piscina.jpg",
     },
-  ]
+  ];
 
   return (
     <header className="flex w-full min-h-18 bg-white shadow-sm sticky">
       <div className="w-6xl mx-auto flex justify-between items-center">
-        <div className="font-bold text-2xl">TeloCuento</div>
+        <Link href="/" className="flex items-center font-bold text-2xl space-x-2">
+          <div className="flex items-center justify-center h-8 w-8 rounded-full bg-purple-600">
+            <Bed className="w-4 h-4 text-white" />
+          </div>
+          <span>TeloCuento</span>
+        </Link>
 
         <NavigationMenu>
           <NavigationMenuList>
-            <Link href="/telos" className="text-sm px-5">Telos</Link>
+            <Link href="/telos" className="text-sm px-5">
+              Telos
+            </Link>
             <NavigationMenuItem>
               <NavigationMenuTrigger>Distritos</NavigationMenuTrigger>
               <NavigationMenuContent>
@@ -117,9 +125,10 @@ function Header() {
                 </ul>
               </NavigationMenuContent>
             </NavigationMenuItem>
-            
-            <Link href="/" className="text-sm px-5">Blog</Link>
 
+            <Link href="/" className="text-sm px-5">
+              Blog
+            </Link>
           </NavigationMenuList>
         </NavigationMenu>
       </div>

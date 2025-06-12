@@ -11,8 +11,11 @@ import Card from "./components/card";
 import ZoneCard from "./components/zone-card";
 import { MapPin, Search, Users } from "lucide-react";
 import Container from "../common/container";
+import getDistritos from "./services/getDistritos";
 
-export default function Home() {
+export default async function Home() {
+  const distritos = await getDistritos()
+
   const telos = [
     {
       id: 1,
@@ -196,12 +199,12 @@ export default function Home() {
             <h2 className="text-3xl font-bold mb-3">Busca por distrito</h2>
             <p>Encuentra alojamiento en los distintos distritos de Lima</p>
             <div className="flex justify-between flex-wrap mt-6">
-              {zonas.map((zona) => (
+              {distritos.districts.map((distrito) => (
                 <ZoneCard
-                  key={zona.id}
-                  district={zona.district}
-                  hotels={zona.hotels}
-                  image={zona.image}
+                  key={distrito.id}
+                  district={distrito.nombre}
+                  hotels={10}
+                  image={distrito.foto}
                 />
               ))}
             </div>

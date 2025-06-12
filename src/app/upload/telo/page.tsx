@@ -53,6 +53,8 @@ export default function CreateTeloForm({ onTeloCreated }: CreateTeloFormProps) {
   const [teloTurns, setTeloTurns] = useState<
     Array<{ descripcion: string; duracion_horas: number; costo: number }>
   >([]); 
+  const [teloSlug, setTeloSlug] = useState(''); 
+  const [teloStars, setTeloStars] = useState<number | ''>('');
 
   const [imageFilesToUpload, setImageFilesToUpload] = useState<File[]>([]); 
   const [previewImageUrls, setPreviewImageUrls] = useState<string[]>([]);
@@ -137,6 +139,24 @@ export default function CreateTeloForm({ onTeloCreated }: CreateTeloFormProps) {
     setTeloPrices(newPrices);
   };
 
+  const generateSlug = (name: string) => {
+    return name
+      .toLowerCase()
+      .trim()
+      .replace(/[ñ]/g, 'n') // Reemplaza ñ por n
+      .replace(/[^a-z0-9\s-]/g, '') // Elimina caracteres especiales (excepto letras, números, espacios, guiones)
+      .replace(/\s+/g, '-') // Reemplaza espacios con guiones
+      .replace(/-+/g, '-'); // Reemplaza múltiples guiones con uno solo
+  };
+
+  useEffect(() => {
+    if (teloName.trim() !== '') {
+      setTeloSlug(generateSlug(teloName));
+    } else {
+      setTeloSlug('');
+    }
+  }, [teloName]);
+
   const handlePriceChange = (
     index: number,
     field: "tipo" | "precio",
@@ -197,6 +217,11 @@ export default function CreateTeloForm({ onTeloCreated }: CreateTeloFormProps) {
       return;
     }
 
+    if (teloStars !== '' && (teloStars < 0 || teloStars > 5)) {
+      console.error('Error: Las estrellas deben ser un valor entre 0 y 5.');
+      return;
+    }
+
     startTransition(async () => {
       const uploadedImageUrls: string[] = [];
 
@@ -227,6 +252,8 @@ export default function CreateTeloForm({ onTeloCreated }: CreateTeloFormProps) {
             precios: teloPrices.length > 0 ? teloPrices : null,
             turnos: teloTurns.length > 0 ? teloTurns : null,
             fotos: uploadedImageUrls,
+            slug: teloSlug.trim(),
+            stars: teloStars !== '' ? parseFloat(teloStars.toString()) : null,
           })
           .select("id")
           .single();
@@ -261,6 +288,9 @@ export default function CreateTeloForm({ onTeloCreated }: CreateTeloFormProps) {
         setTeloTurns([]);
         setImageFilesToUpload([]);
         setPreviewImageUrls([]);
+        setTeloSlug('');
+        setTeloStars('');
+
         if (imageInputRef.current) {
           imageInputRef.current.value = "";
         }
@@ -326,6 +356,37 @@ export default function CreateTeloForm({ onTeloCreated }: CreateTeloFormProps) {
             disabled={isPending}
             required
             rows={4}
+          />
+        </div>
+
+        {/* NUEVO INPUT para SLUG */}
+        <div className="space-y-2">
+          <Label htmlFor="teloSlug">Slug (URL amigable)</Label>
+          <Input
+            id="teloSlug"
+            type="text"
+            value={teloSlug}
+            onChange={(e) => setTeloSlug(e.target.value)} // Permite al usuario editarlo
+            placeholder="ej-telo-oasis-miraflores"
+            disabled={isPending}
+            required
+          />
+          <p className="text-sm text-gray-500">Se generará automáticamente, pero puedes modificarlo.</p>
+        </div>
+
+        {/* NUEVO INPUT para STARS */}
+        <div className="space-y-2">
+          <Label htmlFor="teloStars">Estrellas (Google Maps, ej. 4.5)</Label>
+          <Input
+            id="teloStars"
+            type="number"
+            step="0.1" // Permite valores decimales
+            min="0" // Valor mínimo
+            max="5" // Valor máximo (ajusta si esperas más)
+            value={teloStars}
+            onChange={(e) => setTeloStars(e.target.value === '' ? '' : parseFloat(e.target.value))}
+            placeholder="Ej. 4.5"
+            disabled={isPending}
           />
         </div>
 
