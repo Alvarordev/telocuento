@@ -33,11 +33,7 @@ interface Servicio {
   nombre: string;
 }
 
-interface CreateTeloFormProps {
-  onTeloCreated?: () => void; // Callback opcional al crear un telo
-}
-
-export default function CreateTeloForm({ onTeloCreated }: CreateTeloFormProps) {
+export default function CreateTeloForm() {
   const supabase = createSupabaseClient();
 
   const [teloName, setTeloName] = useState("");
@@ -293,9 +289,7 @@ export default function CreateTeloForm({ onTeloCreated }: CreateTeloFormProps) {
 
         if (imageInputRef.current) {
           imageInputRef.current.value = "";
-        }
-
-        onTeloCreated?.(); 
+        } 
       } catch (error) {
         console.error("Error completo en la creación del telo:", error);
       }
