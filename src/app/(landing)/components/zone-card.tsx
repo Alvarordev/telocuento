@@ -7,11 +7,12 @@ import Link from "next/link";
 interface ZoneCardProps {
   data: Distrito | Servicios;
   hotels: number;
+  href: string;
 }
 
-function ZoneCard({ data, hotels }: ZoneCardProps) {
+function ZoneCard({ data, hotels, href }: ZoneCardProps) {
   return (
-    <Link href={`/telos/${data.slug}`} className=" rounded-lg">
+    <Link href={href} className=" rounded-lg">
       <div className="flex flex-col gap-1 mt-4">
         <img
           src={data.foto}

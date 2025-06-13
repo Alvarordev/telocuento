@@ -27,7 +27,7 @@ async function Header() {
 
         <NavigationMenu>
           <NavigationMenuList>
-            <Link href="/telos" className="text-sm px-5">
+            <Link href="/telos" className="text-base px-5">
               Telos
             </Link>
             <NavigationMenuItem>
@@ -52,7 +52,7 @@ async function Header() {
                   <li>
                     {servicios.servicios.map((comodidad) => (
                       <NavigationMenuLink asChild key={comodidad.id}>
-                        <Link href="#">{comodidad.nombre}</Link>
+                        <Link href={`/telos/amenities/${comodidad.slug}`}>{comodidad.nombre}</Link>
                       </NavigationMenuLink>
                     ))}
                   </li>

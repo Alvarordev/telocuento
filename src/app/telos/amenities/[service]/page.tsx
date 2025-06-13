@@ -7,11 +7,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import Container from "../common/container";
 import { Input } from "@/components/ui/input";
-import TelosCard from "./components/telos-card";
 import { Checkbox } from "@/components/ui/checkbox";
-import getTelos from "./services/getTelos";
 import { ChangeEvent, useEffect, useMemo, useState } from "react";
 import getDistritos, { Distrito } from "@/services/get-distritos";
 import getServicios, { Servicios } from "@/services/get-servicios";
@@ -20,12 +17,21 @@ import {
   Telo,
   TeloWithDistrictName,
 } from "@/services/get-telos";
+import Container from "@/app/common/container";
+import TelosCard from "../../components/telos-card";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
+import { useParams } from "next/navigation";
 
-function TelosPage() {
+function AmenitiesPage() {
+  const params = useParams();
+  const service = typeof params.service === "string" ? params.service : "";
+
   const [allTelos, setAllTelos] = useState<TeloWithDistrictName[] | Telo[]>([]);
   const [distritos, setDistritos] = useState<Distrito[]>([]);
   const [servicios, setServicios] = useState<Servicios[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [serviceData, setServiceData] = useState<Servicios>();
 
   const [selectedDistritos, setSelectedDistritos] = useState<Set<string>>(
     new Set()
@@ -37,23 +43,42 @@ function TelosPage() {
   const [sortBy, setSortBy] = useState<"a-z" | "z-a" | "rating" | "">("");
 
   useEffect(() => {
-    async function loadInitialData() {
+    async function loadInitialDataAndSetFilter() {
       setError(null);
       try {
-        const telosData = await getTelos();
         const distritosData = await getDistritos();
         const serviciosData = await getServicios();
 
-        setAllTelos(telosData);
         setDistritos(distritosData.districts);
         setServicios(serviciosData.servicios);
+
+        const initialSelectedServicesSet = new Set<string>();
+        let foundService: Servicios | undefined;
+
+        if (service) {
+          foundService = serviciosData.servicios.find(
+            (s) => s.slug === service
+          );
+          if (foundService) {
+            initialSelectedServicesSet.add(foundService.id);
+            setServiceData(foundService);
+          }
+        }
+
+        setSelectedServicios(initialSelectedServicesSet);
+
+        const telosData = await getTelosWithDistrict(
+          Array.from(selectedDistritos),
+          Array.from(initialSelectedServicesSet)
+        );
+        setAllTelos(telosData);
       } catch (err) {
-        console.error("Error al cargar datos iniciales:", err);
+        console.error("Error al cargar datos iniciales o aplicar filtro:", err);
         setError("Error al cargar los datos. Inténtalo de nuevo más tarde.");
       }
     }
-    loadInitialData();
-  }, []);
+    loadInitialDataAndSetFilter();
+  }, [service, selectedDistritos]);
 
   const handleDistrictChange = (districtId: string, checked: boolean) => {
     setSelectedDistritos((prev) => {
@@ -68,6 +93,10 @@ function TelosPage() {
   };
 
   const handleServiceChange = (serviceId: string, checked: boolean) => {
+    if (service && serviceId === serviceData!.id && !checked) {
+      return;
+    }
+
     setSelectedServicios((prev) => {
       const newSet = new Set(prev);
       if (checked) {
@@ -121,7 +150,7 @@ function TelosPage() {
     } else if (sortBy === "z-a") {
       currentTelos.sort((a, b) => b.nombre.localeCompare(a.nombre));
     } else if (sortBy === "rating") {
-      currentTelos.sort((a, b) => (b.stars || 0) - (a.stars || 0)); 
+      currentTelos.sort((a, b) => (b.stars || 0) - (a.stars || 0));
     }
 
     return currentTelos;
@@ -189,7 +218,16 @@ function TelosPage() {
         </aside>
 
         <div className="col-span-3 flex flex-col gap-4">
-          <h1 className="text-3xl font-bold">Telos en Lima</h1>
+          <Link
+            href="/telos"
+            className="flex space-x-2 items-center text-primary"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            <span className="underline">Ver todos los hoteles</span>
+          </Link>
+          <h1 className="text-3xl font-bold">
+            Telos con {serviceData?.nombre}
+          </h1>
           <div className="flex items-center justify-between">
             <p className="text-gray-400 text-base">
               {allTelos.length} hotel(es)
@@ -232,4 +270,4 @@ function TelosPage() {
     </Container>
   );
 }
-export default TelosPage;
+export default AmenitiesPage;

@@ -23,6 +23,10 @@ function Carousel({ distritos }: Props) {
     setCurrentIndex((prev) => Math.max(prev - 1, 0));
   };
 
+    if (distritos.length === 0) {
+        return <div className="text-center text-gray-500">No hay distritos disponibles</div>;
+    }
+
   return (
     <div className="relative w-full">
       <div className="overflow-hidden">
@@ -33,7 +37,7 @@ function Carousel({ distritos }: Props) {
         >
           {distritos.map((distrito, index) => (
             <div key={index} className="w-1/4 flex-shrink-0 px-1">
-              <ZoneCard data={distrito} hotels={10} />
+              <ZoneCard data={distrito} hotels={10} href={`/telos/${distrito.slug}`} />
             </div>
           ))}
         </div>

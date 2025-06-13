@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import Link from "next/link";
 import MapEmbed from "@/app/common/mapEmbed";
+import getDistritos from "@/services/get-distritos";
 
 async function TeloPage({
   params,
@@ -31,8 +32,11 @@ async function TeloPage({
   params: Promise<{ district: string; telo_slug: string }>;
 }) {
   const telos = await getTelos();
+  const distritos = await getDistritos();
 
   const { district, telo_slug } = await params;
+
+  const districtData = distritos.districts.find((d) => d.slug === district);
 
   const telo = telos.find((t) => t.slug === telo_slug);
 
@@ -63,7 +67,7 @@ async function TeloPage({
               <BreadcrumbSeparator />
               <BreadcrumbItem>
                 <BreadcrumbLink asChild>
-                  <Link href={`/telos/${district}`}>{district}</Link>
+                  <Link href={`/telos/${district}`}>{districtData?.nombre}</Link>
                 </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />

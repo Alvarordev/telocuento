@@ -13,13 +13,13 @@ import { MapPin, Search, Users } from "lucide-react";
 import Container from "../common/container";
 import getDistritos from "@/services/get-distritos";
 import getServicios from "@/services/get-servicios";
-import { getTelos } from "@/services/get-telos";
+import { getTelosWithRange } from "@/services/get-telos";
 import Carousel from "./components/carousel";
 
 export default async function Home() {
   const distritos = await getDistritos();
   const servicios = await getServicios();
-  const telos = await getTelos();
+  const telos = await getTelosWithRange(3);
 
   return (
     <Container>
@@ -157,7 +157,7 @@ export default async function Home() {
           <p>Encuentra servicios de estacionamiento, jacuzzi, tragos, etc.</p>
           <div className="flex justify-between flex-wrap mt-6">
             {servicios.servicios.map((servicio) => (
-              <ZoneCard key={servicio.id} data={servicio} hotels={10} />
+              <ZoneCard key={servicio.id} data={servicio} hotels={10} href={`/telos/amenities/${servicio.slug}`} />
             ))}
           </div>
         </div>

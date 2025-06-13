@@ -20,7 +20,7 @@ function FotoCarousel({ fotos }: { fotos: string[] }) {
   };
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-full z-0">
       <div className="overflow-hidden">
         <div
           ref={carouselRef}
