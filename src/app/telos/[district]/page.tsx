@@ -11,8 +11,14 @@ import getDistritos from "../services/getDistritos";
 import getServicios from "../services/getServicios";
 import TelosCard from "../components/telos-card";
 import Container from "@/app/common/container";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 
-async function DistrictPage({ params }: { params: Promise<{ district: string }> }) {
+async function DistrictPage({
+  params,
+}: {
+  params: Promise<{ district: string }>;
+}) {
   const telos = await getTelos();
   const distritos = await getDistritos();
   const servicios = await getServicios();
@@ -70,6 +76,10 @@ async function DistrictPage({ params }: { params: Promise<{ district: string }> 
         </aside>
 
         <div className="col-span-3 flex flex-col gap-4">
+          <Link href="/telos" className="flex space-x-2 items-center text-primary">
+            <ArrowLeft className="h-4 w-4" />
+            <span className="underline">Ver todos los hoteles</span>
+          </Link>
           <h1 className="text-3xl font-bold">Telos en {districtData.nombre}</h1>
           <div className="flex items-center justify-between">
             <p className="text-gray-400 text-base">

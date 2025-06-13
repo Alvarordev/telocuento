@@ -14,6 +14,7 @@ import Container from "../common/container";
 import getDistritos from "@/services/get-distritos";
 import getServicios from "@/services/get-servicios";
 import { getTelos } from "@/services/get-telos";
+import Carousel from "./components/carousel";
 
 export default async function Home() {
   const distritos = await getDistritos();
@@ -125,15 +126,17 @@ export default async function Home() {
       <section className="pb-16">
         <div className="w-6xl mx-auto">
           <h2 className="text-3xl font-bold">Alojamientos más vistos</h2>
-          <div className="flex justify-between flex-wrap mt-6">
+          <div className="flex gap-6 mt-6">
             {telos.map((telo) => (
-              <Card
-                key={telo.id}
-                telo={telo}
-                district={
-                  distritos.districts.find((d) => d.id === telo.distrito_id)!
-                }
-              />
+              <div key={telo.id} className="w-1/4 flex-shrink-0">
+                <Card
+                  key={telo.id}
+                  telo={telo}
+                  district={
+                    distritos.districts.find((d) => d.id === telo.distrito_id)!
+                  }
+                />
+              </div>
             ))}
           </div>
         </div>
@@ -143,13 +146,7 @@ export default async function Home() {
           <h2 className="text-3xl font-bold mb-3">Busca por distrito</h2>
           <p>Encuentra alojamiento en los distintos distritos de Lima</p>
           <div className="flex justify-between flex-wrap mt-6">
-            {distritos.districts.map((distrito) => (
-              <ZoneCard
-                key={distrito.id}
-                data={distrito}
-                hotels={10}
-              />
-            ))}
+            <Carousel distritos={distritos.districts} />
           </div>
         </div>
       </section>
@@ -160,11 +157,7 @@ export default async function Home() {
           <p>Encuentra servicios de estacionamiento, jacuzzi, tragos, etc.</p>
           <div className="flex justify-between flex-wrap mt-6">
             {servicios.servicios.map((servicio) => (
-              <ZoneCard
-                key={servicio.id}
-                data={servicio}
-                hotels={10}
-              />
+              <ZoneCard key={servicio.id} data={servicio} hotels={10} />
             ))}
           </div>
         </div>
