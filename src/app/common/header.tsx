@@ -9,32 +9,11 @@ import {
 import { Bed } from "lucide-react";
 import Link from "next/link";
 import getDistritos from "../(landing)/services/getDistritos";
+import getServicios from "@/services/get-servicios";
 
 async function Header() {
   const distritos = await getDistritos()
-
-  const comodidades = [
-    {
-      id: 1,
-      name: "Wifi",
-      image: "/wifi.jpg",
-    },
-    {
-      id: 2,
-      name: "Desayuno",
-      image: "/desayuno.jpg",
-    },
-    {
-      id: 3,
-      name: "Estacionamiento",
-      image: "/estacionamiento.jpg",
-    },
-    {
-      id: 4,
-      name: "Piscina",
-      image: "/piscina.jpg",
-    },
-  ];
+  const servicios = await getServicios()
 
   return (
     <header className="flex w-full min-h-18 bg-white shadow-sm sticky">
@@ -71,9 +50,9 @@ async function Header() {
               <NavigationMenuContent>
                 <ul className="grid w-[200px] gap-4">
                   <li>
-                    {comodidades.map((comodidad) => (
+                    {servicios.servicios.map((comodidad) => (
                       <NavigationMenuLink asChild key={comodidad.id}>
-                        <Link href="#">{comodidad.name}</Link>
+                        <Link href="#">{comodidad.nombre}</Link>
                       </NavigationMenuLink>
                     ))}
                   </li>
