@@ -12,7 +12,7 @@ import getServicios from "../services/getServicios";
 import TelosCard from "../components/telos-card";
 import Container from "@/app/common/container";
 
-async function DistrictPage({ params }: { params: { district: string } }) {
+async function DistrictPage({ params }: { params: Promise<{ district: string }> }) {
   const telos = await getTelos();
   const distritos = await getDistritos();
   const servicios = await getServicios();
