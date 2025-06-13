@@ -48,7 +48,7 @@ export default async function Home() {
 
             <Button
               variant="secondary"
-              className="cursor-pointer ml-4 text-base bg-pink-100 px-8 font-semibold"
+              className="cursor-pointer ml-4 text-base bg-primary-foreground px-8 font-semibold"
             >
               Buscar
             </Button>
@@ -87,8 +87,8 @@ export default async function Home() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Search className="w-8 h-8 text-pink-500" />
+              <div className="w-16 h-16 bg-primary-foreground rounded-full flex items-center justify-center mx-auto mb-4">
+                <Search className="w-8 h-8 text-primary" />
               </div>
               <h3 className="text-xl font-semibold mb-2">Busca un hostal</h3>
               <p className="text-gray-600">
@@ -97,8 +97,8 @@ export default async function Home() {
               </p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Users className="w-8 h-8 text-pink-500" />
+              <div className="w-16 h-16 bg-primary-foreground rounded-full flex items-center justify-center mx-auto mb-4">
+                <Users className="w-8 h-8 text-primary" />
               </div>
               <h3 className="text-xl font-semibold mb-2">
                 Revisa los detalles
@@ -109,8 +109,8 @@ export default async function Home() {
               </p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <MapPin className="w-8 h-8 text-pink-500" />
+              <div className="w-16 h-16 bg-primary-foreground rounded-full flex items-center justify-center mx-auto mb-4">
+                <MapPin className="w-8 h-8 text-primary" />
               </div>
               <h3 className="text-xl font-semibold mb-2">Ponte en contacto</h3>
               <p className="text-gray-600">
