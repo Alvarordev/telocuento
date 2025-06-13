@@ -28,11 +28,11 @@ import MapEmbed from "@/app/common/mapEmbed";
 async function TeloPage({
   params,
 }: {
-  params: { district: string; telo_slug: string };
+  params: Promise<{ district: string; telo_slug: string }>;
 }) {
   const telos = await getTelos();
 
-  const { district, telo_slug } = params;
+  const { district, telo_slug } = await params;
 
   const telo = telos.find((t) => t.slug === telo_slug);
 
