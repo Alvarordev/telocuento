@@ -1,5 +1,5 @@
 interface TeloMapEmbedProps {
-  address: string; // La dirección del telo (ej. "Sta. Teresita 79, Gualeguaychú, Entre Ríos")
+  address: string;
   width?: string;
   height?: string;
 }

@@ -12,7 +12,7 @@ import getServicios from "../services/getServicios";
 import TelosCard from "../components/telos-card";
 import Container from "@/app/common/container";
 
-async function DistrictPage({params}: {params: {district: string}}) {
+async function DistrictPage({ params }: { params: { district: string } }) {
   const telos = await getTelos();
   const distritos = await getDistritos();
   const servicios = await getServicios();
@@ -21,15 +21,20 @@ async function DistrictPage({params}: {params: {district: string}}) {
 
   const districtData = distritos.districts.find((d) => d.slug === district);
 
-  const filteredTelos = telos.filter((telo) => 
-    distritos.districts.find((district) => district.id === telo.distrito_id)?.slug === district)
+  const filteredTelos = telos.filter(
+    (telo) =>
+      distritos.districts.find((district) => district.id === telo.distrito_id)
+        ?.slug === district
+  );
 
   if (!districtData) {
     return (
       <Container>
         <div className="text-center w-6xl mx-auto py-10">
           <h1 className="text-3xl font-bold">Distrito no encontrado</h1>
-          <p className="text-gray-500">Lo sentimos, no pudimos encontrar el distrito solicitado.</p>
+          <p className="text-gray-500">
+            Lo sentimos, no pudimos encontrar el distrito solicitado.
+          </p>
         </div>
       </Container>
     );
@@ -67,7 +72,9 @@ async function DistrictPage({params}: {params: {district: string}}) {
         <div className="col-span-3 flex flex-col gap-4">
           <h1 className="text-3xl font-bold">Telos en {districtData.nombre}</h1>
           <div className="flex items-center justify-between">
-            <p className="text-gray-400 text-base">{filteredTelos.length} hotel(es)</p>
+            <p className="text-gray-400 text-base">
+              {filteredTelos.length} hotel(es)
+            </p>
 
             <Select>
               <SelectTrigger>
@@ -87,13 +94,10 @@ async function DistrictPage({params}: {params: {district: string}}) {
             {filteredTelos.map((telo) => (
               <TelosCard
                 key={telo.id}
-                name={telo.nombre}
+                telo={telo}
                 district={
                   distritos.districts.find((d) => d.id === telo.distrito_id)!
                 }
-                rating={telo.stars}
-                slug={telo.slug}
-                foto={telo.fotos[0]}
               />
             ))}
           </div>

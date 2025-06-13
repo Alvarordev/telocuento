@@ -73,7 +73,7 @@ async function TeloPage({
 
           <h1 className="text-3xl font-bold">{telo?.nombre}</h1>
           <div className="flex gap-2 items-center">
-            <Star className="h-4 w-4" />
+            <Star className="h-4 w-4 text-yellow-500" />
             <p>{telo?.stars} (reseñas en google)</p>
           </div>
         </header>
@@ -82,11 +82,8 @@ async function TeloPage({
           <FotoCarousel fotos={telo!.fotos} />
         </section>
 
-        {/* Main Content Grid */}
         <div className="grid lg:grid-cols-4 gap-8 py-4 lg:py-6 pt-0">
-          {/* Main Content */}
           <div className="lg:col-span-3">
-            {/* Description */}
             <section className="mb-8">
               <h2 className="text-2xl font-bold mb-4">Descripción</h2>
               <p className="text-gray-700 leading-relaxed">
@@ -94,7 +91,6 @@ async function TeloPage({
               </p>
             </section>
 
-            {/* Services */}
             <section className="mb-8">
               <h2 className="text-2xl font-bold mb-6">Servicios</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -133,7 +129,6 @@ async function TeloPage({
               </div>
             </section>
 
-            {/* Location */}
             <section className="mb-8">
               <h2 className="text-2xl font-bold mb-4">Ubicación</h2>
               <p className="text-gray-600 mb-4">{telo?.ubicacion}</p>
@@ -141,10 +136,8 @@ async function TeloPage({
             </section>
           </div>
 
-          {/* Sticky Sidebar */}
           <div className="lg:col-span-1">
             <div className="sticky top-6 space-y-4">
-              {/* Turnos Card */}
               <Card>
                 <CardContent className="px-6 py-2">
                   <h3 className="text-xl font-bold mb-4">Turnos</h3>

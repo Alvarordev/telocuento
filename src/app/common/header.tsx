@@ -43,7 +43,7 @@ async function Header() {
           <div className="flex items-center justify-center h-8 w-8 rounded-full bg-purple-600">
             <Bed className="w-4 h-4 text-white" />
           </div>
-          <span>TeloCuento</span>
+          <span className="text-purple-600">TeloCuento</span>
         </Link>
 
         <NavigationMenu>
@@ -80,7 +80,7 @@ async function Header() {
                 </ul>
               </NavigationMenuContent>
             </NavigationMenuItem>
-            
+
           </NavigationMenuList>
         </NavigationMenu>
       </div>

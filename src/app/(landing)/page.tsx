@@ -11,14 +11,14 @@ import Card from "./components/card";
 import ZoneCard from "./components/zone-card";
 import { MapPin, Search, Users } from "lucide-react";
 import Container from "../common/container";
-import getTelos from "@/services/get-telos";
 import getDistritos from "@/services/get-distritos";
 import getServicios from "@/services/get-servicios";
+import { getTelos } from "@/services/get-telos";
 
 export default async function Home() {
-  const telos = await getTelos();
   const distritos = await getDistritos();
   const servicios = await getServicios();
+  const telos = await getTelos();
 
   return (
     <Container>
