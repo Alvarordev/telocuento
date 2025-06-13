@@ -32,7 +32,7 @@ async function TeloPage({
 }) {
   const telos = await getTelos();
 
-  const { district, telo_slug } = await params;
+  const { district, telo_slug } = params;
 
   const telo = telos.find((t) => t.slug === telo_slug);
 
@@ -41,7 +41,9 @@ async function TeloPage({
       <Container>
         <div className="text-center w-6xl mx-auto py-10">
           <h1 className="text-3xl font-bold">Telo no encontrado</h1>
-          <p className="text-gray-500">Lo sentimos, no pudimos encontrar el telo solicitado.</p>
+          <p className="text-gray-500">
+            Lo sentimos, no pudimos encontrar el telo solicitado.
+          </p>
         </div>
       </Container>
     );
@@ -147,8 +149,12 @@ async function TeloPage({
                         key={turno.descripcion}
                         className="flex justify-between items-center"
                       >
-                        <span className="text-gray-700">{turno.descripcion}</span>
-                        <span className="font-semibold">{turno.duracion_horas}hs</span>
+                        <span className="text-gray-700">
+                          {turno.descripcion}
+                        </span>
+                        <span className="font-semibold">
+                          {turno.duracion_horas}hs
+                        </span>
                       </div>
                     ))}
                   </div>
