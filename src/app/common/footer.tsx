@@ -1,4 +1,13 @@
-function Footer() {
+import getDistritos from "@/services/get-distritos";
+import getServicios from "@/services/get-servicios";
+import { getTelos } from "@/services/get-telos";
+import Link from "next/link";
+
+async function Footer() {
+  const distritos = await getDistritos();
+  const hoteles = await getTelos();
+  const comodidades = await getServicios();
+
   return (
     <footer className="flex flex-col justify-end bg-[#111827] text-white">
       <div className="w-6xl mx-auto flex py-8">
@@ -6,25 +15,58 @@ function Footer() {
           <div className="flex flex-col col-span-1">
             <h3 className="font-semibold text-lg mb-4">TeloCuento</h3>
 
-            <p>Encuentra los mejores hostales en Lima</p>
+            <p className="text-gray-300">Encuentra los mejores hostales en Lima</p>
           </div>
 
           <div className="flex flex-col col-span-1">
             <h3 className="font-semibold text-lg mb-4">Ubicaciones</h3>
 
-            <p>Encuentra los mejores hostales en Lima</p>
+            <ul>
+              {distritos.districts.slice(0, 4).map((distrito) => (
+                <li key={distrito.id} className="mb-2">
+                  <Link
+                    href={`/telos/${distrito.slug}`}
+                    className="text-gray-300 hover:text-white transition-colors"
+                  >
+                    Hoteles en {distrito.nombre}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
 
           <div className="flex flex-col col-span-1">
             <h3 className="font-semibold text-lg mb-4">Más Vistos</h3>
 
-            <p>Encuentra los mejores hostales en Lima</p>
+            <ul>
+              {hoteles.slice(0, 4).map((hotel) => (
+                <li key={hotel.id} className="mb-2">
+                  <Link
+                    href={`/telos/${hotel.slug}`}
+                    className="text-gray-300 hover:text-white transition-colors"
+                  >
+                    {hotel.nombre}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
 
           <div className="flex flex-col col-span-1">
             <h3 className="font-semibold text-lg mb-4">Comodidades</h3>
 
-            <p>Encuentra los mejores hostales en Lima</p>
+            <ul>
+              {comodidades.servicios.slice(0, 4).map((comodidad) => (
+                <li key={comodidad.id} className="mb-2">
+                  <Link
+                    href={`/telos/amenities/${comodidad.slug}`}
+                    className="text-gray-300 hover:text-white transition-colors"
+                  >
+                    {comodidad.nombre}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>
