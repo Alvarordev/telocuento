@@ -1,11 +1,3 @@
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import Card from "./components/card";
 import ZoneCard from "./components/zone-card";
@@ -15,6 +7,7 @@ import getDistritos from "@/services/get-distritos";
 import { getTelos, getTelosWithRange } from "@/services/get-telos";
 import Carousel from "./components/carousel";
 import { getServicios, getTelosCountByService } from "@/services/get-servicios";
+import { DistrictPicker } from "./components/district-picker";
 
 export default async function Home() {
   const distritos = await getDistritos();
@@ -39,29 +32,7 @@ export default async function Home() {
             Busca tu alojamiento ideal en Lima. Ahora encontrar un telo es más
             fácil que nunca
           </p>
-          <div className="flex">
-            <Select>
-              <SelectTrigger className="w-full text-base bg-white">
-                <SelectValue placeholder="Distrito" className="text-black" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  {distritos.districts.map((district) => (
-                    <SelectItem key={district.id} value={district.slug}>
-                      {district.nombre}
-                    </SelectItem>
-                  ))}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-
-            <Button
-              variant="secondary"
-              className="cursor-pointer ml-4 text-base bg-primary-foreground px-8 font-semibold"
-            >
-              Buscar
-            </Button>
-          </div>
+          <DistrictPicker distritos={distritos.districts} />
 
           <div className="flex items-center gap-6 pt-8">
             <p className="text-sm font-semibold">Más buscados: </p>
@@ -69,21 +40,21 @@ export default async function Home() {
               <Button
                 variant="secondary"
                 size="sm"
-                className="cursor-pointer text-sm rounded-2xl px-6"
+                className="cursor-pointer text-sm rounded-2xl px-4 md:px-6"
               >
                 Lince
               </Button>
               <Button
                 variant="secondary"
                 size="sm"
-                className="cursor-pointer text-sm rounded-2xl px-6"
+                className="cursor-pointer text-sm rounded-2xl px-4 md:px-6"
               >
                 Estacionamiento
               </Button>
               <Button
                 variant="secondary"
                 size="sm"
-                className="cursor-pointer text-sm rounded-2xl px-6"
+                className="cursor-pointer text-sm rounded-2xl px-4 md:px-6"
               >
                 Ate
               </Button>
@@ -163,14 +134,15 @@ export default async function Home() {
         <div className="md:w-6xl mx-auto pb-16 px-2 md:p-0">
           <h2 className="text-3xl font-bold mb-3">Comodidades</h2>
           <p>Encuentra servicios de estacionamiento, jacuzzi, tragos, etc.</p>
-          <div className="flex justify-between flex-wrap mt-6">
+          <div className="flex justify-between flex-wrap md:flex-nowrap mt-2 md:gap-2 md:mb-6">
             {servicios.servicios.map((servicio) => (
-              <ZoneCard
-                key={servicio.id}
-                data={servicio}
-                hotels={amountOfTelos(servicio.id)}
-                href={`/telos/amenities/${servicio.slug}`}
-              />
+              <div key={servicio.id} className="w-full md:w-1/4">
+                <ZoneCard
+                  data={servicio}
+                  hotels={amountOfTelos(servicio.id)}
+                  href={`/telos/amenities/${servicio.slug}`}
+                />
+              </div>
             ))}
           </div>
         </div>

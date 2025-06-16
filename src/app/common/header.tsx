@@ -34,7 +34,7 @@ async function Header() {
   }
 
   return (
-    <header className="flex w-full min-h-18 bg-white shadow-sm sticky top-0 z-50">
+    <header className="flex w-full min-h-18 bg-white shadow-sm relative top-0 z-50">
       <div className="w-full max-w-6xl mx-auto flex justify-between items-center px-4 py-3">
         <Link
           href="/"

@@ -17,7 +17,7 @@ function ZoneCard({ data, hotels, href }: ZoneCardProps) {
         <img
           src={data.foto}
           alt={`Imagen de ${data.nombre}`}
-          className="w-full h-[200px] object-cover object-center rounded-lg"
+          className="w-full h-[200px] object-cover object-cen rounded-lg"
         />
         <h3 className="text-lg font-bold">{data.nombre}</h3>
         <p className="text-base font-light">{hotels} hoteles disponibles</p>

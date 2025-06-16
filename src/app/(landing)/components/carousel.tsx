@@ -14,30 +14,13 @@ function Carousel({ distritos, hoteles }: Props) {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [itemsPerView, setItemsPerView] = useState(1); 
+  const [itemsPerView, setItemsPerView] = useState(1);
 
   const REAL_VISIBLE_ITEMS_MD = 4;
-  const CLONED_ITEMS_COUNT = 2;
-
-  const preparedDistritos =
-    distritos.length > 0
-      ? [
-          ...distritos.slice(-CLONED_ITEMS_COUNT),
-          ...distritos,
-          ...distritos.slice(0, CLONED_ITEMS_COUNT),
-        ]
-      : [];
-
-  const initialIndex = distritos.length > 0 ? CLONED_ITEMS_COUNT : 0;
 
   useEffect(() => {
-    if (distritos.length > 0 && carouselRef.current) {
-      setCurrentIndex(initialIndex);
-      carouselRef.current.style.transitionDuration = '0s';
-      void carouselRef.current.offsetWidth; // Forzar reflow
-      carouselRef.current.style.transitionDuration = '300ms';
-    }
-  }, [distritos.length, initialIndex]);
+    
+  }, [distritos.length]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -63,34 +46,26 @@ function Carousel({ distritos, hoteles }: Props) {
 
   const handleTransitionEnd = () => {
     setIsTransitioning(false);
+  };
 
-    if (currentIndex >= preparedDistritos.length - CLONED_ITEMS_COUNT) {
-      setCurrentIndex(initialIndex);
-      if (carouselRef.current) {
-        carouselRef.current.style.transitionDuration = '0s';
-        void carouselRef.current.offsetWidth;
-        carouselRef.current.style.transitionDuration = '300ms';
-      }
-    } else if (currentIndex < CLONED_ITEMS_COUNT && distritos.length > 0) {
-      setCurrentIndex(preparedDistritos.length - CLONED_ITEMS_COUNT - distritos.length);
-      if (carouselRef.current) {
-        carouselRef.current.style.transitionDuration = '0s';
-        void carouselRef.current.offsetWidth;
-        carouselRef.current.style.transitionDuration = '300ms';
-      }
+  const maxIndex = distritos.length > itemsPerView ? distritos.length - itemsPerView : 0;
+
+  const nextSlide = () => {
+    if (isTransitioning || distritos.length === 0) return;
+
+    if (currentIndex < maxIndex) {
+      setIsTransitioning(true);
+      setCurrentIndex((prev) => prev + 1);
     }
   };
 
-  const nextSlide = () => {
-    if (isTransitioning || preparedDistritos.length === 0) return;
-    setIsTransitioning(true);
-    setCurrentIndex((prev) => prev + 1);
-  };
-
   const prevSlide = () => {
-    if (isTransitioning || preparedDistritos.length === 0) return;
-    setIsTransitioning(true);
-    setCurrentIndex((prev) => prev - 1);
+    if (isTransitioning || distritos.length === 0) return;
+
+    if (currentIndex > 0) {
+      setIsTransitioning(true);
+      setCurrentIndex((prev) => prev - 1);
+    }
   };
 
   if (distritos.length === 0) {
@@ -103,6 +78,9 @@ function Carousel({ distritos, hoteles }: Props) {
 
   const translateXValue = currentIndex * (100 / itemsPerView);
 
+  const isPrevDisabled = currentIndex === 0;
+  const isNextDisabled = currentIndex >= maxIndex;
+
   return (
     <div className="relative w-full overflow-hidden">
       <div
@@ -112,11 +90,11 @@ function Carousel({ distritos, hoteles }: Props) {
           transform: `translateX(-${translateXValue}%)`,
           transition: isTransitioning ? "transform 300ms ease-in-out" : "none",
         }}
-        onTransitionEnd={handleTransitionEnd}
+        onTransitionEnd={handleTransitionEnd} 
       >
-        {preparedDistritos.map((distrito, index) => (
+        {distritos.map((distrito) => (
           <div
-            key={`${distrito.id}-${index}`}
+            key={distrito.id}
             className="w-full flex-shrink-0 px-1 md:w-1/4"
           >
             <ZoneCard
@@ -130,7 +108,9 @@ function Carousel({ distritos, hoteles }: Props) {
 
       <button
         onClick={prevSlide}
-        className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors z-10"
+        disabled={isPrevDisabled}
+        className={`absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors z-10
+          ${isPrevDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
         aria-label="Previous slide"
       >
         <ChevronLeft className="w-6 h-6" />
@@ -138,7 +118,9 @@ function Carousel({ distritos, hoteles }: Props) {
 
       <button
         onClick={nextSlide}
-        className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors z-10"
+        disabled={isNextDisabled}
+        className={`absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors z-10
+          ${isNextDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
         aria-label="Next slide"
       >
         <ChevronRight className="w-6 h-6" />
