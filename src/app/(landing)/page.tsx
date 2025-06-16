@@ -29,11 +29,13 @@ export default async function Home() {
 
   return (
     <Container>
-      <section className="bg-[#111827] text-white">
-        <div className="w-2xl mx-auto flex flex-col gap-2 py-16">
+      <section className="bg-[#111827] text-white px-4 lg:p-0">
+        <div className="md:w-2xl mx-auto flex flex-col gap-2 py-16">
           <h2 className="text-sm">Telos y alojamientos en Lima</h2>
-          <h1 className="text-4xl font-bold">Encuentra telos en Lima</h1>
-          <p>
+          <h1 className="md:text-4xl text-3xl font-bold">
+            Encuentra telos en Lima
+          </h1>
+          <p className="text-sm md:text-base mb-4 md:mb-0">
             Busca tu alojamiento ideal en Lima. Ahora encontrar un telo es más
             fácil que nunca
           </p>
@@ -91,7 +93,7 @@ export default async function Home() {
       </section>
 
       <section className="py-16">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto px-2 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
               <div className="w-16 h-16 bg-primary-foreground rounded-full flex items-center justify-center mx-auto mb-4">
@@ -129,12 +131,12 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="pb-16">
-        <div className="w-6xl mx-auto">
+      <section className="pb-10 md:pb-16">
+        <div className="md:w-6xl mx-auto px-2 md:px-0">
           <h2 className="text-3xl font-bold">Alojamientos más vistos</h2>
-          <div className="flex mt-6">
+          <div className="flex flex-col gap-4 md:gap-0 md:flex-row mt-6">
             {telos.map((telo) => (
-              <div key={telo.id} className="w-1/4 flex-shrink-0">
+              <div key={telo.id} className="md:w-1/4 md:flex-shrink-0">
                 <Card
                   key={telo.id}
                   telo={telo}
@@ -148,17 +150,17 @@ export default async function Home() {
         </div>
       </section>
       <section>
-        <div className="w-6xl mx-auto pb-16">
+        <div className="md:w-6xl mx-auto pb-10 md:pb-16 px-2 md:px-0">
           <h2 className="text-3xl font-bold mb-3">Busca por distrito</h2>
           <p>Encuentra alojamiento en los distintos distritos de Lima</p>
-          <div className="flex justify-between flex-wrap mt-6">
+          <div className="flex mt-2">
             <Carousel distritos={distritos.districts} hoteles={hoteles} />
           </div>
         </div>
       </section>
 
       <section>
-        <div className="w-6xl mx-auto pb-16">
+        <div className="md:w-6xl mx-auto pb-16 px-2 md:p-0">
           <h2 className="text-3xl font-bold mb-3">Comodidades</h2>
           <p>Encuentra servicios de estacionamiento, jacuzzi, tragos, etc.</p>
           <div className="flex justify-between flex-wrap mt-6">

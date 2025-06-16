@@ -11,9 +11,9 @@ interface CardProps {
 function Card({telo, district}: CardProps) {
     return(
         <Link href={`/telos/${district.slug}/${telo.slug}`}>
-            <img src={telo.fotos[0]} alt={telo.slug}  className="rounded-lg h-80 w-[270px] object-cover" />
+            <img src={telo.fotos[0]} alt={telo.slug}  className="rounded-lg h-80 w-full md:w--auto md:w-[270px] object-cover" />
 
-            <div className="flex flex-col gap-1 mt-4">
+            <div className="flex flex-col mt-4 mb-2">
                 <h3 className="text-lg font-bold">{telo.nombre}</h3>
                 <p className="text-base font-light">{district.nombre}</p>
                 <p>⭐ {telo.stars}</p>
