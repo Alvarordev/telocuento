@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ChangeEvent, useEffect, useMemo, useState } from "react";
 import getDistritos, { Distrito } from "@/services/get-distritos";
-import getServicios, { Servicios } from "@/services/get-servicios";
+import { getServicios, Servicios } from "@/services/get-servicios";
 import {
   getTelosWithDistrict,
   Telo,

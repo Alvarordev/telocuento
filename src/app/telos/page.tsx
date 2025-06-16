@@ -14,7 +14,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import getTelos from "./services/getTelos";
 import { ChangeEvent, useEffect, useMemo, useState } from "react";
 import getDistritos, { Distrito } from "@/services/get-distritos";
-import getServicios, { Servicios } from "@/services/get-servicios";
+import { Servicios, getServicios } from "@/services/get-servicios";
 import {
   getTelosWithDistrict,
   Telo,
@@ -121,7 +121,7 @@ function TelosPage() {
     } else if (sortBy === "z-a") {
       currentTelos.sort((a, b) => b.nombre.localeCompare(a.nombre));
     } else if (sortBy === "rating") {
-      currentTelos.sort((a, b) => (b.stars || 0) - (a.stars || 0)); 
+      currentTelos.sort((a, b) => (b.stars || 0) - (a.stars || 0));
     }
 
     return currentTelos;

@@ -3,12 +3,14 @@ import { Distrito } from "@/services/get-distritos";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef, useState } from "react";
 import ZoneCard from "./zone-card";
+import { Telo } from "@/services/get-telos";
 
 interface Props {
   distritos: Distrito[];
+  hoteles: Telo[];
 }
 
-function Carousel({ distritos }: Props) {
+function Carousel({ distritos, hoteles }: Props) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null);
 
@@ -23,9 +25,17 @@ function Carousel({ distritos }: Props) {
     setCurrentIndex((prev) => Math.max(prev - 1, 0));
   };
 
-    if (distritos.length === 0) {
-        return <div className="text-center text-gray-500">No hay distritos disponibles</div>;
-    }
+  const getDistritoAmountOfTelos = (distrito_id: string) => {
+    return hoteles.filter((telo) => telo.distrito_id === distrito_id).length;
+  };
+
+  if (distritos.length === 0) {
+    return (
+      <div className="text-center text-gray-500">
+        No hay distritos disponibles
+      </div>
+    );
+  }
 
   return (
     <div className="relative w-full">
@@ -37,7 +47,11 @@ function Carousel({ distritos }: Props) {
         >
           {distritos.map((distrito, index) => (
             <div key={index} className="w-1/4 flex-shrink-0 px-1">
-              <ZoneCard data={distrito} hotels={10} href={`/telos/${distrito.slug}`} />
+              <ZoneCard
+                data={distrito}
+                hotels={getDistritoAmountOfTelos(distrito.id)}
+                href={`/telos/${distrito.slug}`}
+              />
             </div>
           ))}
         </div>

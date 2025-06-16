@@ -6,7 +6,7 @@ import Link from "next/link";
 
 interface ZoneCardProps {
   data: Distrito | Servicios;
-  hotels: number;
+  hotels: Promise<number> | number;
   href: string;
 }
 

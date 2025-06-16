@@ -9,7 +9,7 @@ import {
 import { Bed } from "lucide-react";
 import Link from "next/link";
 import getDistritos from "../(landing)/services/getDistritos";
-import getServicios from "@/services/get-servicios";
+import { getServicios } from "@/services/get-servicios";
 
 async function Header() {
   const distritos = await getDistritos()

@@ -1,5 +1,5 @@
 import getDistritos from "@/services/get-distritos";
-import getServicios from "@/services/get-servicios";
+import { getServicios } from "@/services/get-servicios";
 import { getTelos } from "@/services/get-telos";
 import Link from "next/link";
 

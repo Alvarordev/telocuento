@@ -12,14 +12,20 @@ import ZoneCard from "./components/zone-card";
 import { MapPin, Search, Users } from "lucide-react";
 import Container from "../common/container";
 import getDistritos from "@/services/get-distritos";
-import getServicios from "@/services/get-servicios";
-import { getTelosWithRange } from "@/services/get-telos";
+import { getTelos, getTelosWithRange } from "@/services/get-telos";
 import Carousel from "./components/carousel";
+import { getServicios, getTelosCountByService } from "@/services/get-servicios";
 
 export default async function Home() {
   const distritos = await getDistritos();
   const servicios = await getServicios();
   const telos = await getTelosWithRange(3);
+  const hoteles = await getTelos();
+
+  async function amountOfTelos(servicio_id: string) {
+    const telosCount = await getTelosCountByService(servicio_id);
+    return telosCount;
+  }
 
   return (
     <Container>
@@ -126,7 +132,7 @@ export default async function Home() {
       <section className="pb-16">
         <div className="w-6xl mx-auto">
           <h2 className="text-3xl font-bold">Alojamientos más vistos</h2>
-          <div className="flex gap-6 mt-6">
+          <div className="flex mt-6">
             {telos.map((telo) => (
               <div key={telo.id} className="w-1/4 flex-shrink-0">
                 <Card
@@ -146,7 +152,7 @@ export default async function Home() {
           <h2 className="text-3xl font-bold mb-3">Busca por distrito</h2>
           <p>Encuentra alojamiento en los distintos distritos de Lima</p>
           <div className="flex justify-between flex-wrap mt-6">
-            <Carousel distritos={distritos.districts} />
+            <Carousel distritos={distritos.districts} hoteles={hoteles} />
           </div>
         </div>
       </section>
@@ -157,7 +163,12 @@ export default async function Home() {
           <p>Encuentra servicios de estacionamiento, jacuzzi, tragos, etc.</p>
           <div className="flex justify-between flex-wrap mt-6">
             {servicios.servicios.map((servicio) => (
-              <ZoneCard key={servicio.id} data={servicio} hotels={10} href={`/telos/amenities/${servicio.slug}`} />
+              <ZoneCard
+                key={servicio.id}
+                data={servicio}
+                hotels={amountOfTelos(servicio.id)}
+                href={`/telos/amenities/${servicio.slug}`}
+              />
             ))}
           </div>
         </div>
