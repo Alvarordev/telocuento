@@ -14,6 +14,7 @@ function Carousel({ distritos, hoteles }: Props) {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [itemsPerView, setItemsPerView] = useState(1); 
 
   const REAL_VISIBLE_ITEMS_MD = 4;
   const CLONED_ITEMS_COUNT = 2;
@@ -21,9 +22,9 @@ function Carousel({ distritos, hoteles }: Props) {
   const preparedDistritos =
     distritos.length > 0
       ? [
-          ...distritos.slice(-CLONED_ITEMS_COUNT), // Clones de los últimos elementos (para el inicio)
-          ...distritos, // Los elementos originales
-          ...distritos.slice(0, CLONED_ITEMS_COUNT), // Clones de los primeros elementos (para el final)
+          ...distritos.slice(-CLONED_ITEMS_COUNT),
+          ...distritos,
+          ...distritos.slice(0, CLONED_ITEMS_COUNT),
         ]
       : [];
 
@@ -33,46 +34,62 @@ function Carousel({ distritos, hoteles }: Props) {
     if (distritos.length > 0 && carouselRef.current) {
       setCurrentIndex(initialIndex);
       carouselRef.current.style.transitionDuration = '0s';
-      void carouselRef.current.offsetWidth;
+      void carouselRef.current.offsetWidth; // Forzar reflow
       carouselRef.current.style.transitionDuration = '300ms';
     }
-  }, [distritos.length, initialIndex]); // Dependencias para que se ejecute una vez al inicio.
+  }, [distritos.length, initialIndex]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) { 
+        setItemsPerView(REAL_VISIBLE_ITEMS_MD);
+      } else {
+        setItemsPerView(1); 
+      }
+    };
+
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []); 
 
   const getDistritoAmountOfTelos = (distrito_id: string): number => {
     return hoteles.filter((telo) => telo.distrito_id === distrito_id).length;
   };
 
-
   const handleTransitionEnd = () => {
-    setIsTransitioning(false); // Permite nuevas interacciones.
+    setIsTransitioning(false);
 
     if (currentIndex >= preparedDistritos.length - CLONED_ITEMS_COUNT) {
       setCurrentIndex(initialIndex);
       if (carouselRef.current) {
-        carouselRef.current.style.transitionDuration = '0s'; // Salto instantáneo
-        void carouselRef.current.offsetWidth; // Forzar reflow
-        carouselRef.current.style.transitionDuration = '300ms'; // Reactivar transición
+        carouselRef.current.style.transitionDuration = '0s';
+        void carouselRef.current.offsetWidth;
+        carouselRef.current.style.transitionDuration = '300ms';
       }
-    }
-    if (currentIndex < CLONED_ITEMS_COUNT && distritos.length > 0) {
-      setCurrentIndex(preparedDistritos.length - CLONED_ITEMS_COUNT * 2); // Ajuste para el salto hacia atrás
+    } else if (currentIndex < CLONED_ITEMS_COUNT && distritos.length > 0) {
+      setCurrentIndex(preparedDistritos.length - CLONED_ITEMS_COUNT - distritos.length);
       if (carouselRef.current) {
-        carouselRef.current.style.transitionDuration = '0s'; // Salto instantáneo
-        void carouselRef.current.offsetWidth; // Forzar reflow
-        carouselRef.current.style.transitionDuration = '300ms'; // Reactivar transición
+        carouselRef.current.style.transitionDuration = '0s';
+        void carouselRef.current.offsetWidth;
+        carouselRef.current.style.transitionDuration = '300ms';
       }
     }
   };
 
   const nextSlide = () => {
     if (isTransitioning || preparedDistritos.length === 0) return;
-    setIsTransitioning(true); // Bloquea interacciones durante la transición.
+    setIsTransitioning(true);
     setCurrentIndex((prev) => prev + 1);
   };
 
   const prevSlide = () => {
     if (isTransitioning || preparedDistritos.length === 0) return;
-    setIsTransitioning(true); // Bloquea interacciones durante la transición.
+    setIsTransitioning(true);
     setCurrentIndex((prev) => prev - 1);
   };
 
@@ -84,8 +101,7 @@ function Carousel({ distritos, hoteles }: Props) {
     );
   }
 
-  const translateXValue =
-    currentIndex * (100 / (window.innerWidth >= 768 ? REAL_VISIBLE_ITEMS_MD : 1));
+  const translateXValue = currentIndex * (100 / itemsPerView);
 
   return (
     <div className="relative w-full overflow-hidden">
@@ -96,7 +112,7 @@ function Carousel({ distritos, hoteles }: Props) {
           transform: `translateX(-${translateXValue}%)`,
           transition: isTransitioning ? "transform 300ms ease-in-out" : "none",
         }}
-        onTransitionEnd={handleTransitionEnd} 
+        onTransitionEnd={handleTransitionEnd}
       >
         {preparedDistritos.map((distrito, index) => (
           <div
