@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
+import { Skeleton } from "@/components/ui/skeleton";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
 
@@ -60,14 +61,18 @@ function FotoCarousel({ fotos }: FotoCarouselProps) {
             <div
               key={index}
               className={`
-                w-full md:w-1/4 flex-shrink-0 px-1
-                ${!imagesLoaded[index] ? "animate-pulse bg-gray-200 dark:bg-gray-700" : ""}
-              `}
+                w-full md:w-1/4 flex-shrink-0 px-1`}
               style={{
-                minHeight: isMobile ? '256px' : '320px',
-                height: isMobile ? '256px' : '320px',
+                minHeight: isMobile ? "256px" : "320px",
+                height: isMobile ? "256px" : "320px",
               }}
             >
+              {!imagesLoaded[index] && (
+                <Skeleton
+                  className="w-full h-full rounded-md"
+                  style={{ minHeight: isMobile ? "256px" : "320px" }}
+                />
+              )}
               <img
                 src={image || "/placeholder.svg"}
                 alt={`Hotel image ${index + 1}`}
