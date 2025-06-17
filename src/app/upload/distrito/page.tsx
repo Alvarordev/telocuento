@@ -67,7 +67,7 @@ function UploadDistrito() {
       const { data, error } = await supabase
         .from("distritos")
         .insert({
-          nombre: districtName.toLocaleLowerCase(),
+          nombre: districtName,
           foto: imageUrl,
           slug: teloSlug
         })
