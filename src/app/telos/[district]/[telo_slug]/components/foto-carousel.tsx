@@ -2,13 +2,32 @@
 "use client";
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
-function FotoCarousel({ fotos }: { fotos: string[] }) {
+interface FotoCarouselProps {
+  fotos: string[];
+}
+
+function FotoCarousel({ fotos }: FotoCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
+  const [imagesLoaded, setImagesLoaded] = useState<boolean[]>(
+    new Array(fotos.length).fill(false)
+  );
 
-  const visibleImages = 4;
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const visibleImages = isMobile ? 1 : 4;
   const maxIndex = Math.max(0, fotos.length - visibleImages);
 
   const nextSlide = () => {
@@ -19,20 +38,44 @@ function FotoCarousel({ fotos }: { fotos: string[] }) {
     setCurrentIndex((prev) => Math.max(prev - 1, 0));
   };
 
+  const transformPercentage = isMobile ? currentIndex * 100 : currentIndex * 25;
+
+  const handleImageLoad = (index: number) => {
+    setImagesLoaded((prev) => {
+      const newLoaded = [...prev];
+      newLoaded[index] = true;
+      return newLoaded;
+    });
+  };
+
   return (
     <div className="relative w-full z-0">
       <div className="overflow-hidden">
         <div
           ref={carouselRef}
           className="flex transition-transform duration-300 ease-in-out"
-          style={{ transform: `translateX(-${currentIndex * 25}%)` }}
+          style={{ transform: `translateX(-${transformPercentage}%)` }}
         >
           {fotos.map((image, index) => (
-            <div key={index} className="w-1/4 flex-shrink-0 px-1">
+            <div
+              key={index}
+              className={`
+                w-full md:w-1/4 flex-shrink-0 px-1
+                ${!imagesLoaded[index] ? "animate-pulse bg-gray-200 dark:bg-gray-700" : ""}
+              `}
+              style={{
+                minHeight: isMobile ? '256px' : '320px',
+                height: isMobile ? '256px' : '320px',
+              }}
+            >
               <img
                 src={image || "/placeholder.svg"}
                 alt={`Hotel image ${index + 1}`}
-                className="w-full h-80 object-cover rounded-md"
+                onLoad={() => handleImageLoad(index)}
+                className={`
+                  w-full h-64 md:h-80 object-cover rounded-md
+                  ${imagesLoaded[index] ? "" : "hidden"}
+                `}
               />
             </div>
           ))}

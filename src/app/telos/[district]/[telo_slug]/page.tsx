@@ -55,7 +55,7 @@ async function TeloPage({
 
   return (
     <Container>
-      <div className="w-6xl mx-auto flex flex-col gap-2 py-10">
+      <div className="px-2 md:px-0 md:w-6xl mx-auto flex flex-col gap-2 py-10">
         <header className="flex flex-col gap-2">
           <Breadcrumb>
             <BreadcrumbList className="text-base">
@@ -67,7 +67,9 @@ async function TeloPage({
               <BreadcrumbSeparator />
               <BreadcrumbItem>
                 <BreadcrumbLink asChild>
-                  <Link href={`/telos/${district}`}>{districtData?.nombre}</Link>
+                  <Link href={`/telos/${district}`}>
+                    {districtData?.nombre}
+                  </Link>
                 </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
@@ -95,6 +97,59 @@ async function TeloPage({
               <p className="text-gray-700 leading-relaxed">
                 {telo?.descripcion}
               </p>
+            </section>
+
+            <section className="lg:col-span-1 md:hidden mb-8">
+              <div className="space-y-4">
+                <Card>
+                  <CardContent className="px-6 py-2">
+                    <h3 className="text-xl font-bold mb-4">Turnos</h3>
+                    <div className="space-y-3">
+                      {telo?.turnos.map((turno) => (
+                        <div
+                          key={turno.descripcion}
+                          className="flex justify-between items-center"
+                        >
+                          <span className="text-gray-700">
+                            {turno.descripcion}
+                          </span>
+                          <span className="font-semibold">
+                            {turno.duracion_horas}hs
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+
+                  <CardContent className="px-6 py-2">
+                    <h3 className="text-xl font-bold mb-4">Precios</h3>
+                    <div className="space-y-3 mb-6">
+                      {telo?.precios.map((precio) => (
+                        <div
+                          key={precio.tipo}
+                          className="flex justify-between items-center"
+                        >
+                          <span className="text-gray-700">{precio.tipo}</span>
+                          <span className="font-semibold">
+                            S/. {precio.precio}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white">
+                      💬 contactar
+                    </Button>
+
+                    <p className="text-xs text-gray-500 mt-3">
+                      Las tarifas son orientativas y pueden sufrir
+                      modificaciones y/o actualizaciones que no se vean
+                      reflejadas en esta página. Ante cualquier duda consulte al
+                      momento de ingresar al Hotel.
+                    </p>
+                  </CardContent>
+                </Card>
+              </div>
             </section>
 
             <section className="mb-8">
@@ -142,7 +197,7 @@ async function TeloPage({
             </section>
           </div>
 
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-1 hidden md:block">
             <div className="sticky top-6 space-y-4">
               <Card>
                 <CardContent className="px-6 py-2">
