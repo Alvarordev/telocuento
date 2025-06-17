@@ -18,10 +18,10 @@ import {
   TeloWithDistrictName,
 } from "@/services/get-telos";
 import Container from "@/app/common/container";
-import TelosCard from "../../components/telos-card";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { useParams } from "next/navigation";
+import TelosGrid from "../../components/telos-grid";
 
 function AmenitiesPage() {
   const params = useParams();
@@ -168,8 +168,8 @@ function AmenitiesPage() {
 
   return (
     <Container>
-      <div className="w-6xl mx-auto grid grid-cols-4 gap-4 my-10">
-        <aside className="flex flex-col col-span-1 border border-gray-200 shadow-sm self-start">
+      <div className="flex flex-col px-2 md:px-0 md:w-6xl mx-auto md:grid grid-cols-4 gap-4 my-10">
+        <aside className="hidden md:flex flex-col col-span-1 border border-gray-200 shadow-sm self-start">
           <div className="p-4">
             <p className="font-semibold pb-3">Ubicación</p>
             <ul className="flex flex-col gap-1">
@@ -256,15 +256,7 @@ function AmenitiesPage() {
             onChange={handleSearchChange}
           />
 
-          <div className="grid grid-cols-2 grid-rows-3 gap-4 ">
-            {filteredAndSortedTelos.map((telo) => (
-              <TelosCard
-                key={telo.id}
-                telo={telo}
-                district={distritos.find((d) => d.id === telo.distrito_id)!}
-              />
-            ))}
-          </div>
+          <TelosGrid telos={filteredAndSortedTelos} distritos={distritos} />
         </div>
       </div>
     </Container>
