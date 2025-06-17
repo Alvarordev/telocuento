@@ -27,10 +27,15 @@ import MapEmbed from "@/app/common/mapEmbed";
 import getDistritos from "@/services/get-distritos";
 import { Metadata } from "next";
 
+interface PageProps {
+  district: string;
+  telo_slug: string;
+}
+
 export async function generateMetadata({
   params,
 }: {
-  params: { district: string; telo_slug: string };
+  params: Promise<PageProps>;
 }): Promise<Metadata> {
   const telos = await getTelos();
   const distritos = await getDistritos();
@@ -40,7 +45,6 @@ export async function generateMetadata({
   const districtData = distritos.districts.find((d) => d.slug === district);
   const telo = telos.find((t) => t.slug === telo_slug);
 
-  // Si el telo no se encuentra, puedes retornar metadatos genéricos o un 404
   if (!telo) {
     return {
       title: "Telo no encontrado - Teloscuento",
