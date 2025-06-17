@@ -8,9 +8,14 @@ interface DistrictPageProps {
   children: React.ReactNode;
 }
 
+interface metadataProps {
+    district: string
+}
+
 export async function generateMetadata({
   params,
-}: DistrictPageProps): Promise<Metadata> {
+}: {params: Promise<metadataProps>}): Promise<Metadata> {
+
   const { district: currentDistrictSlug } = await params;
 
   const distritosData = await getDistritos();
