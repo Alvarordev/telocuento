@@ -133,8 +133,8 @@ function TelosPage() {
 
   return (
     <Container>
-      <div className="w-6xl mx-auto grid grid-cols-4 gap-4 my-10">
-        <aside className="flex flex-col col-span-1 border border-gray-200 shadow-sm self-start">
+      <div className="flex flex-col px-4  md:w-6xl mx-auto md:grid md:grid-cols-4 gap-4 my-10">
+        <aside className="hidden md:flex flex-col col-span-1 border border-gray-200 shadow-sm self-start">
           <div className="p-4">
             <p className="font-semibold pb-3">Ubicación</p>
             <ul className="flex flex-col gap-1">
@@ -195,7 +195,6 @@ function TelosPage() {
               {isLoading
                 ? "Cargando..."
                 : `${filteredAndSortedTelos.length} hotel(es)`}{" "}
-              {/* Ya no hay isFilteringByServices */}
             </p>
 
             <Select

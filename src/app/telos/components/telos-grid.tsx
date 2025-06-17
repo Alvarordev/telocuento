@@ -12,10 +12,10 @@ interface TelosGridProps {
 function TelosGrid({ telos, distritos, isLoading }: TelosGridProps) {
   if (isLoading || telos.length === 0) {
     return (
-      <div className="grid grid-cols-2 grid-rows-3 gap-4">
+      <div className="flex flex-col md:grid grid-cols-2 grid-rows-3 gap-4">
         {Array.from({ length: 6 }).map((_, index) => (
           <div key={index} className="p-4">
-            <Skeleton className="h-[320px] w-[420px] mb-2" />
+            <Skeleton className="h-[320px] w-full md:w-[420px] mb-2" />
             <Skeleton className="h-6 w-3/4 mb-1" />
             <Skeleton className="h-4 w-1/2" />
           </div>
@@ -25,7 +25,7 @@ function TelosGrid({ telos, distritos, isLoading }: TelosGridProps) {
   }
 
   return (
-    <div className="grid grid-cols-2 grid-rows-3 gap-4 ">
+    <div className="flex flex-col md:grid grid-cols-2 grid-rows-3 gap-4 ">
       {telos.map((telo) => (
         <TelosCard
           key={telo.id}
