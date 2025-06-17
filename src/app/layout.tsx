@@ -59,7 +59,7 @@ export const metadata: Metadata = {
   viewport: "width=device-width, initial-scale=1.0",
   themeColor: "#6B46C1",
   icons: {
-    icon: '/favicon.ico',
+    icon: '/teloscuento.ico',
   },
 };
 

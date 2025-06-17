@@ -7,7 +7,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { Bed } from "lucide-react";
+import { BedDouble } from "lucide-react";
 import Link from "next/link";
 import { getServicios } from "@/services/get-servicios"; 
 
@@ -41,7 +41,7 @@ async function Header() {
           className="flex items-center font-bold text-2xl space-x-2"
         >
           <div className="flex items-center justify-center h-8 w-8 rounded-full bg-purple-600">
-            <Bed className="w-4 h-4 text-white" />
+            <BedDouble className="w-4 h-4 text-white" />
           </div>
           <span className="text-purple-600">TelosCuento</span>
         </Link>
