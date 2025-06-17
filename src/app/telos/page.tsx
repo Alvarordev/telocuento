@@ -9,23 +9,19 @@ import {
 } from "@/components/ui/select";
 import Container from "../common/container";
 import { Input } from "@/components/ui/input";
-import TelosCard from "./components/telos-card";
 import { Checkbox } from "@/components/ui/checkbox";
-import getTelos from "./services/getTelos";
 import { ChangeEvent, useEffect, useMemo, useState } from "react";
 import getDistritos, { Distrito } from "@/services/get-distritos";
 import { Servicios, getServicios } from "@/services/get-servicios";
-import {
-  getTelosWithDistrict,
-  Telo,
-  TeloWithDistrictName,
-} from "@/services/get-telos";
+import { getTelosWithServices, Telo } from "@/services/get-telos";
+import TelosGrid from "./components/telos-grid";
 
 function TelosPage() {
-  const [allTelos, setAllTelos] = useState<TeloWithDistrictName[] | Telo[]>([]);
+  const [initialTelos, setInitialTelos] = useState<Telo[]>([]);
   const [distritos, setDistritos] = useState<Distrito[]>([]);
   const [servicios, setServicios] = useState<Servicios[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const [selectedDistritos, setSelectedDistritos] = useState<Set<string>>(
     new Set()
@@ -39,17 +35,22 @@ function TelosPage() {
   useEffect(() => {
     async function loadInitialData() {
       setError(null);
+      setIsLoading(true);
       try {
-        const telosData = await getTelos();
-        const distritosData = await getDistritos();
-        const serviciosData = await getServicios();
+        const [telosData, distritosData, serviciosData] = await Promise.all([
+          getTelosWithServices(),
+          getDistritos(),
+          getServicios(),
+        ]);
 
-        setAllTelos(telosData);
+        setInitialTelos(telosData);
         setDistritos(distritosData.districts);
         setServicios(serviciosData.servicios);
       } catch (err) {
         console.error("Error al cargar datos iniciales:", err);
         setError("Error al cargar los datos. Inténtalo de nuevo más tarde.");
+      } finally {
+        setIsLoading(false);
       }
     }
     loadInitialData();
@@ -83,28 +84,21 @@ function TelosPage() {
     setSearchTerm(e.target.value);
   };
 
-  useEffect(() => {
-    const handler = setTimeout(async () => {
-      setError(null);
-      try {
-        const filteredTelos = await getTelosWithDistrict(
-          Array.from(selectedDistritos),
-          Array.from(selectedServicios)
-        );
-        setAllTelos(filteredTelos);
-      } catch (err) {
-        console.error("Error al filtrar telos:", err);
-        setError("Error al aplicar filtros. Inténtalo de nuevo.");
-      }
-    }, 300);
-
-    return () => {
-      clearTimeout(handler);
-    };
-  }, [selectedDistritos, selectedServicios]);
-
   const filteredAndSortedTelos = useMemo(() => {
-    let currentTelos = [...allTelos];
+    let currentTelos = [...initialTelos];
+    if (selectedDistritos.size > 0) {
+      currentTelos = currentTelos.filter((telo) =>
+        selectedDistritos.has(telo.distrito_id)
+      );
+    }
+
+    if (selectedServicios.size > 0) {
+      currentTelos = currentTelos.filter((telo) =>
+        Array.from(selectedServicios).every((serviceId) =>
+          telo.servicios_relacion?.some((s) => s.servicio_id === serviceId)
+        )
+      );
+    }
 
     if (searchTerm.trim() !== "") {
       const lowercasedSearchTerm = searchTerm.toLowerCase();
@@ -125,7 +119,7 @@ function TelosPage() {
     }
 
     return currentTelos;
-  }, [allTelos, searchTerm, sortBy]);
+  }, [initialTelos, searchTerm, sortBy, selectedDistritos, selectedServicios]);
 
   if (error) {
     return (
@@ -152,10 +146,13 @@ function TelosPage() {
                     onCheckedChange={(checked) =>
                       handleDistrictChange(district.id, !!checked)
                     }
+                    disabled={isLoading}
                   />
                   <label
                     htmlFor={`district-${district.id}`}
-                    className="text-sm cursor-pointer"
+                    className={`text-sm cursor-pointer ${
+                      isLoading ? "text-gray-400" : ""
+                    }`}
                   >
                     {district.nombre}
                   </label>
@@ -175,10 +172,13 @@ function TelosPage() {
                     onCheckedChange={(checked) =>
                       handleServiceChange(servicio.id, !!checked)
                     }
+                    disabled={isLoading}
                   />
                   <label
                     htmlFor={`service-${servicio.id}`}
-                    className="text-sm cursor-pointer"
+                    className={`text-sm cursor-pointer ${
+                      isLoading ? "text-gray-400" : ""
+                    }`}
                   >
                     {servicio.nombre}
                   </label>
@@ -192,7 +192,10 @@ function TelosPage() {
           <h1 className="text-3xl font-bold">Telos en Lima</h1>
           <div className="flex items-center justify-between">
             <p className="text-gray-400 text-base">
-              {allTelos.length} hotel(es)
+              {isLoading
+                ? "Cargando..."
+                : `${filteredAndSortedTelos.length} hotel(es)`}{" "}
+              {/* Ya no hay isFilteringByServices */}
             </p>
 
             <Select
@@ -200,6 +203,7 @@ function TelosPage() {
               onValueChange={(value: "a-z" | "z-a" | "rating" | "") =>
                 setSortBy(value)
               }
+              disabled={isLoading}
             >
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Ordenar por" />
@@ -216,20 +220,18 @@ function TelosPage() {
             placeholder="Buscar por nombre, ubicación o descripción"
             value={searchTerm}
             onChange={handleSearchChange}
+            disabled={isLoading}
           />
 
-          <div className="grid grid-cols-2 grid-rows-3 gap-4 ">
-            {filteredAndSortedTelos.map((telo) => (
-              <TelosCard
-                key={telo.id}
-                telo={telo}
-                district={distritos.find((d) => d.id === telo.distrito_id)!}
-              />
-            ))}
-          </div>
+          <TelosGrid
+            telos={filteredAndSortedTelos}
+            distritos={distritos}
+            isLoading={isLoading}
+          />
         </div>
       </div>
     </Container>
   );
 }
+
 export default TelosPage;

@@ -1,4 +1,5 @@
 import { createSupabaseClient } from "@/supabase/client";
+import { Telo } from "./get-telos";
 
 export interface Servicios {
   id: string;
@@ -38,4 +39,20 @@ export async function getTelosCountByService(servicioId: string): Promise<number
   }
 
   return data.length;
+}
+
+export async function getTelosByService(servicioId: string): Promise<Telo[]> {
+  const supabase = createSupabaseClient();
+
+  const { data, error } = await supabase.from("telos_servicios").select("*").eq("servicio_id", servicioId);
+
+  if (error) {
+    console.error(
+      "Error al obtener el conteo de telos por servicio:",
+      error.message
+    );
+    return [];
+  }
+
+  return data;
 }

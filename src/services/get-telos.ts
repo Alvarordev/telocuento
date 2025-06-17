@@ -15,8 +15,19 @@ export interface Telo {
   servicios_relacion?: { servicio_id: string }[];
 }
 
+interface TeloSupabaseResponse extends Telo {
+  telos_servicios: { servicio_id: string }[];
+  servicios_relacion?: undefined;
+}
+
 export interface TeloWithDistrictName extends Omit<Telo, "distrito_id"> {
   distrito_id: Distrito;
+}
+
+export interface Telos_Servicios {
+  id: string;
+  telo_id: string;
+  servicio_id: string;
 }
 
 export async function getTelos(): Promise<Telo[]> {
@@ -48,6 +59,42 @@ export async function getTelosWithRange(range = 1000): Promise<Telo[]> {
     return [];
   }
   return data || [];
+}
+
+export async function getTelosWithServices(): Promise<Telo[]> {
+  const supabase = createSupabaseClient();
+
+  const { data, error } = await supabase
+    .from("telos")
+    .select(
+      `
+      *,
+      telos_servicios (
+        servicio_id
+      )
+      `
+    )
+    .order("id", { ascending: true });
+
+  if (error) {
+    console.error("Error fetching telos with services:", error);
+    return [];
+  }
+
+  const mappedData: Telo[] = data.map((teloResponse: TeloSupabaseResponse) => {
+    const { telos_servicios, ...rest } = teloResponse;
+
+    const newTelo: Telo = {
+      ...rest,
+      servicios_relacion: telos_servicios.map((ts) => ({
+        servicio_id: ts.servicio_id,
+      })),
+    };
+
+    return newTelo;
+  });
+
+  return mappedData || [];
 }
 
 export async function getTelosWithDistrict(
