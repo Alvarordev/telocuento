@@ -9,10 +9,10 @@ import { Checkbox } from "@/components/ui/checkbox";
 import getTelos from "../services/getTelos";
 import getDistritos from "../services/getDistritos";
 import getServicios from "../services/getServicios";
-import TelosCard from "../components/telos-card";
 import Container from "@/app/common/container";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import TelosGrid from "../components/telos-grid";
 
 async function DistrictPage({
   params,
@@ -48,8 +48,8 @@ async function DistrictPage({
 
   return (
     <Container>
-      <div className="w-6xl mx-auto grid grid-cols-4 gap-4 my-10">
-        <aside className="flex flex-col col-span-1 border border-gray-200 shadow-sm self-start">
+      <div className="flex flex-col px-2 md:w-6xl mx-auto md:grid grid-cols-4 gap-4 my-10">
+        <aside className="hidden md:flex flex-col col-span-1 border border-gray-200 shadow-sm self-start">
           <div className="p-4">
             <p className="font-semibold pb-3">Ubicación</p>
             <ul className="flex flex-col gap-1">
@@ -76,7 +76,10 @@ async function DistrictPage({
         </aside>
 
         <div className="col-span-3 flex flex-col gap-4">
-          <Link href="/telos" className="flex space-x-2 items-center text-primary">
+          <Link
+            href="/telos"
+            className="flex space-x-2 items-center text-primary"
+          >
             <ArrowLeft className="h-4 w-4" />
             <span className="underline">Ver todos los hoteles</span>
           </Link>
@@ -100,17 +103,7 @@ async function DistrictPage({
 
           <Input placeholder="Buscar por nombre" />
 
-          <div className="grid grid-cols-2 grid-rows-3 gap-4 ">
-            {filteredTelos.map((telo) => (
-              <TelosCard
-                key={telo.id}
-                telo={telo}
-                district={
-                  distritos.districts.find((d) => d.id === telo.distrito_id)!
-                }
-              />
-            ))}
-          </div>
+          <TelosGrid telos={filteredTelos} distritos={distritos.districts} />
         </div>
       </div>
     </Container>
