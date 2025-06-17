@@ -1,13 +1,6 @@
 import { Metadata } from "next";
 import getDistritos from "@/services/get-distritos";
 
-interface DistrictPageProps {
-  params: Promise<{
-    district: string;
-  }>;
-  children: React.ReactNode;
-}
-
 interface metadataProps {
     district: string
 }
@@ -68,6 +61,6 @@ export async function generateMetadata({
 
 export default function DistrictLayout({
   children,
-}: DistrictPageProps & { children: React.ReactNode }) {
+}: { children: React.ReactNode }) {
   return <>{children}</>;
 }
