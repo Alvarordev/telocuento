@@ -43,16 +43,16 @@ async function Header() {
           <div className="flex items-center justify-center h-8 w-8 rounded-full bg-purple-600">
             <Bed className="w-4 h-4 text-white" />
           </div>
-          <span className="text-purple-600">TeloCuento</span>
+          <span className="text-purple-600">TelosCuento</span>
         </Link>
         <NavigationMenu className="hidden md:block">
           <NavigationMenuList>
-            <Link href="/telos" className="text-base px-5">
+            <Link href="/telos" className="text-base px-5 font-semibold">
               Telos
             </Link>
 
             <NavigationMenuItem>
-              <NavigationMenuTrigger>Distritos</NavigationMenuTrigger>
+              <NavigationMenuTrigger className="font-semibold">Distritos</NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid w-[200px] gap-2 p-4">
                   {distritos.map((distrito) => (
@@ -72,7 +72,7 @@ async function Header() {
             </NavigationMenuItem>
 
             <NavigationMenuItem>
-              <NavigationMenuTrigger>Comodidades</NavigationMenuTrigger>
+              <NavigationMenuTrigger className="font-semibold">Comodidades</NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid w-[200px] gap-2 p-4">
                   {servicios.map((comodidad) => (

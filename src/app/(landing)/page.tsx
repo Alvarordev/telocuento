@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import Card from "./components/card";
 import ZoneCard from "./components/zone-card";
 import { MapPin, Search, Users } from "lucide-react";
@@ -8,6 +7,7 @@ import { getTelos, getTelosWithRange } from "@/services/get-telos";
 import Carousel from "./components/carousel";
 import { getServicios, getTelosCountByService } from "@/services/get-servicios";
 import { DistrictPicker } from "./components/district-picker";
+import Link from "next/link";
 
 export default async function Home() {
   const distritos = await getDistritos();
@@ -24,11 +24,11 @@ export default async function Home() {
     <Container>
       <section className="bg-[#111827] text-white px-4 lg:p-0">
         <div className="md:w-2xl mx-auto flex flex-col gap-2 py-16">
-          <h2 className="text-sm">Telos y alojamientos en Lima</h2>
+          <h2 className="text-sm">TELOS Y ALOJAMIENTOS EN LIMA</h2>
           <h1 className="md:text-4xl text-3xl font-bold">
             Encuentra telos en Lima
           </h1>
-          <p className="text-sm md:text-base mb-4 md:mb-0">
+          <p className="text-sm md:text-base pb-4 md:pb-4">
             Busca tu alojamiento ideal en Lima. Ahora encontrar un telo es más
             fácil que nunca
           </p>
@@ -37,27 +37,24 @@ export default async function Home() {
           <div className="flex items-center gap-6 pt-8">
             <p className="text-sm font-semibold">Más buscados: </p>
             <div className="flex items-center gap-2">
-              <Button
-                variant="secondary"
-                size="sm"
-                className="cursor-pointer text-sm rounded-2xl px-4 md:px-6"
+              <Link
+                href={"/telos/lince"}
+                className="text-black bg-secondary py-2 text-sm rounded-2xl px-4 md:px-6 hover:bg-primary hover:text-card transition-all"
               >
                 Lince
-              </Button>
-              <Button
-                variant="secondary"
-                size="sm"
-                className="cursor-pointer text-sm rounded-2xl px-4 md:px-6"
+              </Link>
+              <Link
+                href={"/telos/amenities/estacionamiento"}
+                className="text-black bg-secondary py-2 text-sm rounded-2xl px-4 md:px-6 hover:bg-primary hover:text-card transition-all"
               >
                 Estacionamiento
-              </Button>
-              <Button
-                variant="secondary"
-                size="sm"
-                className="cursor-pointer text-sm rounded-2xl px-4 md:px-6"
+              </Link>
+              <Link
+                href={"/telos/san-miguel"}
+                className="text-black bg-secondary py-2 text-sm rounded-2xl px-4 md:px-6 hover:bg-primary hover:text-card transition-all"
               >
-                Ate
-              </Button>
+                San Miguel
+              </Link>
             </div>
           </div>
         </div>
@@ -130,7 +127,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <section>
+      <section className="md:pb-16">
         <div className="md:w-6xl mx-auto pb-16 px-2 md:p-0">
           <h2 className="text-3xl font-bold mb-3">Comodidades</h2>
           <p>Encuentra servicios de estacionamiento, jacuzzi, tragos, etc.</p>
