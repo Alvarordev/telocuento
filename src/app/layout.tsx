@@ -22,7 +22,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: {
-    default: "TelosCuento - Encuentra tu espacio ideal en Lima",
+    default: "TelosCuento - Encuentra tu telo ideal en Lima",
     template: "%s | TelosCuento", 
   },
   description: "Descubre los mejores telos y hostales por horas en Lima. Encuentra privacidad, confort y ofertas exclusivas para tu encuentro perfecto. Tu guía definitiva de hospedaje por horas en Lince, Miraflores y más distritos.",
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     siteName: "TelosCuento",
     images: [
       {
-        url: "/logo-teloscuento.png", 
+        url: "https://www.teloscuento.com/logo-teloscuento.png", 
         width: 1200,
         height: 630,
         alt: "TelosCuento - Encuentra tu espacio ideal en Lima",

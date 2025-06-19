@@ -13,6 +13,7 @@ export interface Telo {
   slug: string;
   stars: number;
   servicios_relacion?: { servicio_id: string }[];
+  created_at?: string;
 }
 
 interface TeloSupabaseResponse extends Telo {

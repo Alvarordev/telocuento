@@ -32,7 +32,7 @@ export async function generateMetadata({
     districtData?.nombre.toLowerCase() || "",
   ].filter(Boolean);
 
-  const imageUrl = "/placeholder-district.svg";
+  const imageUrl = districtData?.foto;
 
   return {
     title: title,
@@ -48,7 +48,7 @@ export async function generateMetadata({
       siteName: "Teloscuento",
       images: [
         {
-          url: imageUrl,
+          url: imageUrl!,
           width: 1200,
           height: 630,
           alt: `Telos en ${districtData?.nombre || currentDistrictSlug}`,
