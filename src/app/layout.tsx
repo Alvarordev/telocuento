@@ -48,11 +48,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: "TelosCuento - Encuentra tu espacio ideal en Lima",
     description: "Descubre los mejores telos y hostales por horas en Lima. Tu guía definitiva de hospedaje por horas en Lince, Miraflores y más distritos.",
-    url: "https://www.teloscuento.com", 
+    url: "https://teloscuento.com", 
     siteName: "TelosCuento",
     images: [
       {
-        url: "opengraph-image.png",
+        url: "https://teloscuento.com/opengraph-image.png",
         width: 1200,
         height: 630,
         alt: "TelosCuento - Encuentra tu espacio ideal en Lima",
