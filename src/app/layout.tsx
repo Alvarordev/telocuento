@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     default: "TelosCuento - Encuentra tu telo ideal en Lima",
     template: "%s | TelosCuento", 
   },
-  description: "Descubre los mejores telos y hostales por horas en Lima. Encuentra privacidad, confort y ofertas exclusivas para tu encuentro perfecto. Tu guía definitiva de hospedaje por horas en Lince, Miraflores y más distritos.",
+  description: "Descubre los mejores telos y hostales por horas en Lima. Tu guía definitiva de hospedaje por horas en Lince, Miraflores y más distritos.",
   keywords: [
     "telos Lima",
     "hoteles por horas Lima",
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "TelosCuento - Encuentra tu espacio ideal en Lima",
-    description: "Descubre los mejores telos y hostales por horas en Lima. Encuentra privacidad, confort y ofertas exclusivas para tu encuentro perfecto.",
+    description: "Descubre los mejores telos y hostales por horas en Lima. Tu guía definitiva de hospedaje por horas en Lince, Miraflores y más distritos.",
     url: "https://www.teloscuento.com", 
     siteName: "TelosCuento",
     images: [
@@ -63,6 +63,9 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: '/teloscuento.ico',
+  },
+  twitter: {
+    card: "summary_large_image",
   },
 };
 
