@@ -45,25 +45,17 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/',
   },
-  openGraph: {
-    title: "TelosCuento - Encuentra tu espacio ideal en Lima",
-    description: "Descubre los mejores telos y hostales por horas en Lima. Tu guía definitiva de hospedaje por horas en Lince, Miraflores y más distritos.",
-    url: "https://www.teloscuento.com", 
-    siteName: "TelosCuento",
-    images: [
-      {
-        url: "https://www.teloscuento.com/logo-teloscuento.png", 
-        width: 1200,
-        height: 630,
-        alt: "TelosCuento - Encuentra tu espacio ideal en Lima",
-      },
-    ],
-    locale: "es_PE", 
-    type: "website",
-  },
-  icons: {
-    icon: '/teloscuento.ico',
-  },
+  // openGraph: {
+  //   title: "TelosCuento - Encuentra tu espacio ideal en Lima",
+  //   description: "Descubre los mejores telos y hostales por horas en Lima. Tu guía definitiva de hospedaje por horas en Lince, Miraflores y más distritos.",
+  //   url: "https://www.teloscuento.com", 
+  //   siteName: "TelosCuento",
+  //   locale: "es_PE", 
+  //   type: "website",
+  // },
+  // icons: {
+  //   icon: '/teloscuento.ico',
+  // },
   twitter: {
     card: "summary_large_image",
   },
