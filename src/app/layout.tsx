@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "./common/header";
@@ -14,6 +14,11 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
+export const viewport: Viewport = {
+  width: "width=device-width, initial-scale=1.0",
+  themeColor: "#6B46C1",
+}
 
 export const metadata: Metadata = {
   title: {
@@ -56,8 +61,6 @@ export const metadata: Metadata = {
     locale: "es_PE", 
     type: "website",
   },
-  viewport: "width=device-width, initial-scale=1.0",
-  themeColor: "#6B46C1",
   icons: {
     icon: '/teloscuento.ico',
   },
