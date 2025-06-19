@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     "telos en Miraflores",
     "telos en San Isidro",
     "moteles Lima",
-    "telos en Lima"
+    "telos en lima"
   ],
   metadataBase: new URL('https://www.teloscuento.com'),
   alternates: {
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     siteName: "TelosCuento",
     images: [
       {
-        url: "https://www.teloscuento.com/images/og-image.jpg", 
+        url: "/logo-teloscuento.png", 
         width: 1200,
         height: 630,
         alt: "TelosCuento - Encuentra tu espacio ideal en Lima",
