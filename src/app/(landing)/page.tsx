@@ -34,7 +34,7 @@ export default async function Home() {
           </p>
           <DistrictPicker distritos={distritos.districts} />
 
-          <div className="flex items-center gap-6 pt-8">
+          <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-6 pt-8 overflow-hidden">
             <p className="text-sm font-semibold">Más buscados: </p>
             <div className="flex items-center gap-2">
               <Link
@@ -51,7 +51,7 @@ export default async function Home() {
               </Link>
               <Link
                 href={"/telos/san-miguel"}
-                className="text-black bg-secondary py-2 text-sm rounded-2xl px-4 md:px-6 hover:bg-primary hover:text-card transition-all"
+                className="text-black bg-secondary py-2 text-sm rounded-2xl px-4 md:px-6 hover:bg-primary hover:text-card transition-all text-nowrap"
               >
                 San Miguel
               </Link>
