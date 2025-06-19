@@ -62,7 +62,12 @@ export const metadata: Metadata = {
     type: "website",
   },
   icons: {
-    icon: '/teloscuento.ico',
+    icon: [
+      { url: '/favicon-16x16.ico', sizes: '16x16', type: 'image/ico' },
+      { url: '/favicon-32x32.ico', sizes: '32x32', type: 'image/ico' },
+      { url: '/favicon.ico', sizes: '48x48', type: 'image/ico' },
+    ],
+    shortcut: '/favicon.ico'
   },
   twitter: {
     card: "summary_large_image",
