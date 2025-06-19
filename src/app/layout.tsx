@@ -41,18 +41,18 @@ export const metadata: Metadata = {
     "moteles Lima",
     "telos en lima"
   ],
-  metadataBase: new URL('https://www.teloscuento.com'),
+  metadataBase: new URL('https://teloscuento.com'),
   alternates: {
     canonical: '/',
   },
   openGraph: {
     title: "TelosCuento - Encuentra tu espacio ideal en Lima",
     description: "Descubre los mejores telos y hostales por horas en Lima. Tu guía definitiva de hospedaje por horas en Lince, Miraflores y más distritos.",
-    url: "https://teloscuento.com", 
+    url: "/", 
     siteName: "TelosCuento",
     images: [
       {
-        url: "https://teloscuento.com/opengraph-image.png",
+        url: "/opengraph-image.png",
         width: 1200,
         height: 630,
         alt: "TelosCuento - Encuentra tu espacio ideal en Lima",
@@ -66,6 +66,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
+    images: ["/opengraph-image.png"],
   },
 };
 
