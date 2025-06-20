@@ -13,7 +13,7 @@ async function Footer() {
       <div className="md:w-6xl mx-auto flex py-8 px-2">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 w-full px-4 md:px-0">
           <div className="flex flex-col col-span-1">
-            <h3 className="font-semibold text-lg mb-4">TeloCuento</h3>
+            <h3 className="font-semibold text-lg mb-4">TelosCuento</h3>
 
             <p className="text-gray-300">Encuentra los mejores hostales en Lima</p>
           </div>
@@ -73,7 +73,7 @@ async function Footer() {
 
       <div className="border-t border-gray-700">
         <div className="md:w-6xl mx-auto py-4 text-center text-sm px-2">
-          © {new Date().getFullYear()} TeloCuento. Todos los derechos
+          © {new Date().getFullYear()} TelosCuento. Todos los derechos
           reservados.
         </div>
       </div>

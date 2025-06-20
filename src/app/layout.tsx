@@ -18,14 +18,15 @@ const geistMono = Geist_Mono({
 export const viewport: Viewport = {
   width: "width=device-width, initial-scale=1.0",
   themeColor: "#6B46C1",
-}
+};
 
 export const metadata: Metadata = {
   title: {
     default: "TelosCuento - Encuentra tu telo ideal en Lima",
-    template: "%s | TelosCuento", 
+    template: "%s | TelosCuento",
   },
-  description: "Descubre los mejores telos y hostales por horas en Lima. Tu guía definitiva de hospedaje por horas en Lince, Miraflores y más distritos.",
+  description:
+    "Descubre los mejores telos y hostales por horas en Lima. Tu guía definitiva de hospedaje por horas en Lince, Miraflores y más distritos.",
   keywords: [
     "telos Lima",
     "hoteles por horas Lima",
@@ -39,16 +40,17 @@ export const metadata: Metadata = {
     "telos en Miraflores",
     "telos en San Isidro",
     "moteles Lima",
-    "telos en lima"
+    "telos en lima",
   ],
-  metadataBase: new URL('https://teloscuento.com'),
+  metadataBase: new URL("https://teloscuento.com"),
   alternates: {
-    canonical: '/',
+    canonical: "/",
   },
   openGraph: {
     title: "TelosCuento - Encuentra tu espacio ideal en Lima",
-    description: "Descubre los mejores telos y hostales por horas en Lima. Tu guía definitiva de hospedaje por horas en Lince, Miraflores y más distritos.",
-    url: "/", 
+    description:
+      "Descubre los mejores telos y hostales por horas en Lima. Tu guía definitiva de hospedaje por horas en Lince, Miraflores y más distritos.",
+    url: "/",
     siteName: "TelosCuento",
     images: [
       {
@@ -58,16 +60,15 @@ export const metadata: Metadata = {
         alt: "TelosCuento - Encuentra tu espacio ideal en Lima",
       },
     ],
-    locale: "es_PE", 
+    locale: "es_PE",
     type: "website",
   },
   icons: {
     icon: [
-      { url: '/favicon-16x16.ico', sizes: '16x16', type: 'image/ico' },
-      { url: '/favicon-32x32.ico', sizes: '32x32', type: 'image/ico' },
-      { url: '/favicon.ico', sizes: '48x48', type: 'image/ico' },
+      { url: "/favicon.ico" },
+      { url: "/favicon-16x16.ico", sizes: "16x16", type: "image/ico" },
+      { url: "/favicon-32x32.ico", sizes: "32x32", type: "image/ico" },
     ],
-    shortcut: '/favicon.ico'
   },
   twitter: {
     card: "summary_large_image",
