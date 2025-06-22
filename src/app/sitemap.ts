@@ -7,7 +7,7 @@ import { MetadataRoute } from "next";
 type changeFrequency = "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never" | undefined;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = "https://www.teloscuento.com";
+  const baseUrl = "https://teloscuento.com";
 
   const staticPaths = [
     {
