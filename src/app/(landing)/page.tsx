@@ -8,6 +8,12 @@ import Carousel from "./components/carousel";
 import { getServicios, getTelosCountByService } from "@/services/get-servicios";
 import { DistrictPicker } from "./components/district-picker";
 import Link from "next/link";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 export default async function Home() {
   const distritos = await getDistritos();
@@ -141,6 +147,90 @@ export default async function Home() {
                 />
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="md:pb-32 pb-16">
+        <div className="md:w-3xl mx-auto pb-16 px-2 md:p-0">
+          <h2 className="text-3xl font-bold">Preguntas Frecuentes</h2>
+
+          <div className="mt-6">
+            <Accordion
+              type="single"
+              collapsible
+              className="w-full"
+              defaultValue="item-1"
+            >
+              <AccordionItem value="item-1">
+                <AccordionTrigger>¿A qué se le llama telo?</AccordionTrigger>
+                <AccordionContent className="flex flex-col pr-6">
+                  <p>
+                    Un telo es un establecimiento de alojamiento por horas o por
+                    noche, comúnmente utilizado por parejas que buscan
+                    privacidad y comodidad. Estos lugares ofrecen habitaciones
+                    equipadas con diversas comodidades, como camas amplias,
+                    baños privados y, en algunos casos, servicios adicionales
+                    como jacuzzis o saunas.
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-2">
+                <AccordionTrigger>
+                  ¿Qué necesito para poder ingresar a un telo?
+                </AccordionTrigger>
+                <AccordionContent className="flex flex-col pr-6">
+                  <p>
+                    Para ingresar a un telo en Perú, generalmente se requiere
+                    una identificación válida (DNI) para verificar la edad de
+                    los visitantes. Además, es recomendable llevar efectivo, ya
+                    que muchos telos no aceptan tarjetas de crédito. Algunos
+                    establecimientos pueden solicitar una reserva previa,
+                    especialmente en horarios pico o fines de semana.
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-3">
+                <AccordionTrigger>
+                  ¿A partir de qué edad se puede ingresar a un telo?
+                </AccordionTrigger>
+                <AccordionContent className="flex flex-col pr-6">
+                  <p>
+                    La edad mínima para ingresar a un albergue transitorio en
+                    Perú es de 18 años, ya que estos establecimientos están
+                    destinados a adultos. Es importante llevar una
+                    identificación válida (DNI) para verificar la edad en la
+                    entrada del telo seleccionado.
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-4">
+                <AccordionTrigger>
+                  ¿A qué precio están los telos?
+                </AccordionTrigger>
+                <AccordionContent className="flex flex-col pr-6">
+                  <p>
+                    Los precios de los telos en Perú varían según la ubicación,
+                    las comodidades ofrecidas y la duración de la estancia. En
+                    general, los precios oscilan entre los S/ 35 y S/ 300 soles
+                    aproximadamente.
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-5">
+                <AccordionTrigger>¿A qué telo debo ir?</AccordionTrigger>
+                <AccordionContent className="flex flex-col pr-6">
+                  <p>
+                    La elección del telo depende de tus preferencias personales
+                    y necesidades. Algunos factores a considerar incluyen la
+                    ubicación, el tipo de servicios que ofrecen (como jacuzzi,
+                    sauna, etc.), el ambiente y las opiniones de otros usuarios.
+                    Puedes explorar diferentes opciones en nuestra página para
+                    encontrar el que mejor se adapte a ti.
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
           </div>
         </div>
       </section>
