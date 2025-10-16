@@ -24,9 +24,85 @@ import {
 import Link from "next/link";
 import MapEmbed from "@/app/common/mapEmbed";
 import getDistritos from "@/services/get-distritos";
+import { Metadata } from "next";
 
+interface PageProps {
+  district: string;
+  telo_slug: string;
+}
 
-export async function TeloPage({
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<PageProps>;
+}): Promise<Metadata> {
+  const telos = await getTelos();
+  const distritos = await getDistritos();
+
+  const { district, telo_slug } = await params;
+
+  const districtData = distritos.districts.find((d) => d.slug === district);
+  const telo = telos.find((t) => t.slug === telo_slug);
+
+  if (!telo) {
+    return {
+      title: "Telo no encontrado - Teloscuento",
+      description: "Lo sentimos, el telo que buscas no está disponible.",
+    };
+  }
+
+  const title = `${telo.nombre} en ${
+    districtData?.nombre || district
+  } - Teloscuento`;
+  const description = `${telo.descripcion.substring(
+    0,
+    150
+  )}... Reserva tu experiencia en ${telo.nombre} en ${
+    districtData?.nombre || district
+  }, Lima.`;
+  const imageUrl =
+    telo.fotos && telo.fotos.length > 0 ? telo.fotos[0] : "/placeholder.svg";
+  const canonicalUrl = `https://teloscuento.com/telos/${district}/${telo.slug}`;
+
+  return {
+    title: title,
+    description: description,
+    keywords: [
+      telo.nombre.toLowerCase(),
+      districtData?.nombre.toLowerCase() || "",
+      "telos",
+      "hoteles",
+      "reservas",
+      "Lima",
+      telo.slug.toLowerCase(),
+      "telo de lujo",
+      "motería",
+      "servicios exclusivos",
+      "telos en " + (districtData?.nombre || district),
+    ].filter(Boolean),
+    alternates: {
+      canonical: canonicalUrl,
+    },
+    openGraph: {
+      title: title,
+      description: description,
+      url: canonicalUrl,
+      siteName: "Teloscuento",
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: `${telo.nombre} en ${districtData?.nombre || district}`,
+        },
+      ],
+      locale: "es_PE",
+      type: "article",
+    },
+  };
+}
+
+async function TeloPage({
   params,
 }: {
   params: Promise<{ district: string; telo_slug: string }>;
@@ -39,8 +115,6 @@ export async function TeloPage({
   const districtData = distritos.districts.find((d) => d.slug === district);
 
   const telo = telos.find((t) => t.slug === telo_slug);
-  
-  console.log(telo?.fotos);
 
   if (!telo) {
     return (
