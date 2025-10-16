@@ -9,6 +9,16 @@ interface TelosCardProps {
   district: Distrito;
 }
 
+function normalizeImageUrl(src: string) {
+  if (!src) return "/placeholder.svg";
+  try {
+    return new URL(src).toString();
+  } catch {
+    if (src.startsWith("/")) return src;
+    return `/${src}`;
+  }
+}
+
 function TelosCard({ telo, district }: TelosCardProps) {
   if (!district) {
     return null;
@@ -20,7 +30,7 @@ function TelosCard({ telo, district }: TelosCardProps) {
       className="flex flex-col"
     >
       <img
-        src={telo.fotos[0]}
+        src={normalizeImageUrl(telo.fotos[0])}
         alt={telo.slug}
         className="h-[321px] w-full rounded-lg object-cover"
       />

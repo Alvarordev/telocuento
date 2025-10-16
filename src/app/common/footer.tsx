@@ -42,7 +42,7 @@ async function Footer() {
               {hoteles.slice(0, 4).map((hotel) => (
                 <li key={hotel.id} className="mb-2">
                   <Link
-                    href={`/telos/${hotel.slug}`}
+                    href={`/telos/${hotel.distrito_id}/${hotel.slug}`}
                     className="text-gray-300 hover:text-white transition-colors"
                   >
                     {hotel.nombre}
